@@ -13,20 +13,11 @@ public class Answer {
     @JoinColumn(name = "questionID", nullable = false)
     private Question question;
 
-    @Column(name = "answer1")
-    private String answer1;
+    @Column(name = "answer")
+    private String answer;
 
-    @Column(name = "answer2")
-    private String answer2;
-
-    @Column(name = "answer3")
-    private String answer3;
-
-    @Column(name = "answer4")
-    private String answer4;
-
-    @Column(name = "correct_answer")
-    private Integer correctAnswer;
+    @Column(name = "is_correct")
+    private Boolean isCorrect;
 
     public Long getAnswerID()
     {
@@ -38,28 +29,13 @@ public class Answer {
         return question;
     }
 
-    public String getAnswer1()
+    public String getAnswer()
     {
-        return answer1;
+        return answer;
     }
 
-    public String getAnswer2()
+    public Boolean getIsCorrect()
     {
-        return answer2;
-    }
-
-    public String getAnswer3()
-    {
-        return answer3;
-    }
-
-    public String getAnswer4()
-    {
-        return answer4;
-    }
-
-    public Integer getCorrectAnswer()
-    {
-        return correctAnswer;
+        return isCorrect;
     }
 }

@@ -21,9 +21,6 @@ public class Topic {
     @Column(name = "competency", nullable = false)
     private String competency;
 
-    @Column(name = "study_sessions", nullable = false)
-    private Integer study_sessions;
-
     public Long getTopicID()
     {
         return topicID;
@@ -44,8 +41,4 @@ public class Topic {
         return competency;
     }
 
-    public Integer getStudySessions()
-    {
-        return study_sessions;
-    }
 }

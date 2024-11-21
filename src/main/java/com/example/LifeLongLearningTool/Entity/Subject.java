@@ -16,9 +16,6 @@ public class Subject {
     @Column(name = "Name", nullable = false)
     private String name;
 
-    @Column(name = "NumberOfTopics")
-    private Integer NumberOfTopics;
-
     public Long getSubjectID()
     {
         return subjectID;
@@ -33,11 +30,5 @@ public class Subject {
     {
         return name;
     }
-
-    public Integer getNumberOfTopics()
-    {
-        return NumberOfTopics;
-    }
-
 
 }

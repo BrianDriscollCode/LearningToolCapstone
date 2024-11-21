@@ -9,7 +9,7 @@ import java.util.Date;
 public class StudySession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long studySession;
+    private Long studySessionID;
 
     @ManyToOne
     @JoinColumn(name="UserID", nullable = false)
@@ -30,7 +30,7 @@ public class StudySession {
 
     public Long getStudySessions()
     {
-        return studySession;
+        return studySessionID;
     }
 
     public User getUserID()
