@@ -11,6 +11,6 @@ public class MessageController {
     @GetMapping("/hello")
     public String hello()
     {
-        return "Spring Boot App BOOYA!";
+        return "Spring Boot App BOOY!";
     }
 }
