@@ -1,19 +1,16 @@
 <template>
-  <UserDataViewer />
-  <SubjectDataViewer />
-  <TopicDataViewer />
-  <StudySessionsDataViewer />
-  <QuestionDataViewer />
-  <AnswerDataViewer />
+  <div>
+    <NavBar />
+
+    <div class="content">
+      <RouterView />
+    </div>
+  </div>
 </template>
 
 <script setup>
-import UserDataViewer from "@/components/DataViewers/UserDataViewer.vue"
-import SubjectDataViewer from "@/components/DataViewers/SubjectDataViewer.vue";
-import TopicDataViewer from "@/components/DataViewers/TopicDataViewer.vue";
-import StudySessionsDataViewer from "@/components/DataViewers/StudySessionsDataViewer.vue";
-import QuestionDataViewer from "./components/DataViewers/QuestionDataViewer.vue";
-import AnswerDataViewer from "./components/DataViewers/AnswerDataViewer.vue";
+import NavBar from "@/components/NavBar.vue";
+import { RouterView } from 'vue-router';
 </script>
 
 <style>

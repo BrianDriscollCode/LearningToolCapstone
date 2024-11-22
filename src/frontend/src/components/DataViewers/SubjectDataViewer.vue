@@ -34,7 +34,6 @@ import { ref, onMounted } from "vue";
 let data = ref([]);
 let loading = ref(true);
 
-
 const fetchUsers = async () => 
 {
   try 
@@ -42,8 +41,6 @@ const fetchUsers = async () =>
     const response = await fetch("/api/subjects");
     data.value = await response.json();
     loading.value = false;
-
-
   }
   catch (err)
   {
