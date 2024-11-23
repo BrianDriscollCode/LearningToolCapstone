@@ -1,6 +1,6 @@
 <template>
   <section class="formContainer">
-    <img id="xPNG" :src="xPNG" width="15" height="15"/>
+    <img id="xPNG" :src="xPNG" width="15" height="15" @click="exit"/>
     <div class="formWrapper">
       <div class="logoContainer">
         <img id="logo" :src="logo" width="100" height="100"/>
@@ -19,7 +19,7 @@
             <hr />
           </div>
 
-          <input id="emailInput" type="email" placeholder="Email" v-model="userInfo.email" />
+          <input id="emailInput" type="email" placeholder="Email"  v-model="userInfo.email" />
           <br />
           <input id="passwordInput" type="password" placeholder="Password" v-model="userInfo.password" /> 
           <button id="loginButton" @click="login"> Login </button> 
@@ -36,13 +36,16 @@
 <script setup>
 import { supabase } from '@/clients/supabase';
 import { reactive } from 'vue';
+import { useRouter } from "vue-router";
 import logo from '@/assets/mindMapPngTree.png';
 import xPNG from "@/assets/exitFlaticon.png";
 
 let userInfo = reactive({
-  email: "",
-  password: "",
+  email: "bdriscoll407@gmail.com",
+  password: "Imcool123!",
 });
+
+const router = useRouter();
 
 async function login()
 {
@@ -56,7 +59,24 @@ async function login()
   }
   else
   {
-    console.log(data);
+    if (data.user)
+    {
+      router.push('/platform/onboarding');
+    }
+  }
+}
+
+async function exit()
+{
+  const localUser = await supabase.auth.getSession();
+
+  if (localUser.data.session)
+  {
+    router.push('/unauthorized');
+  }
+  else
+  {
+    router.push('/')
   }
 }
 
@@ -70,13 +90,14 @@ async function login()
   display: flex;
   flex-direction: column;
   padding: 1em;
-  background-color: beige;
-  height: 70%;
+  background-color: rgb(36, 36, 36);
   width: 700px;
   margin-top: auto;
   margin-bottom: auto;
   border-radius: .5em;
+  color:white;
 }
+
 
 .formWrapper
 {
@@ -124,9 +145,10 @@ async function login()
   width: 100%;
   height: 50px;
   margin-bottom: 2em;
-  padding: 0;
+  padding: 0 0 0 1em;
   margin: 0 0 2em 0;
   border: 1px solid #ccc;
+  font-size: 1em;
 }
 
 #passwordInput
@@ -135,9 +157,10 @@ async function login()
   width: 100%;
   height: 50px;
   margin-bottom: 2em;
-  padding: 0;
+  padding: 0 0 0 1em;
   margin: 0 0 2em 0;
   border: 1px solid #ccc;
+  font-size: 1em;
 }
 
 #loginButton

@@ -1,6 +1,4 @@
 <template>
-  <LoginForm />
-
   <UserDataViewer />
   <SubjectDataViewer />
   <TopicDataViewer />
@@ -10,8 +8,6 @@
 </template>
 
 <script setup>
-  import LoginForm from "@/components/AccountManagement/LoginForm.vue"
-
   import UserDataViewer from "@/components/DataViewers/UserDataViewer.vue"
   import SubjectDataViewer from "@/components/DataViewers/SubjectDataViewer.vue";
   import TopicDataViewer from "@/components/DataViewers/TopicDataViewer.vue";

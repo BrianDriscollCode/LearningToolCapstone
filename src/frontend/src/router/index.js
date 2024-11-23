@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+// General
 import HomeView from '@/views/HomeView.vue'
 import DataView from "@/views/DataView.vue"
 import UnauthorizedView from '@/views/UnauthorizedView.vue'
 import AccountManagerConsole from '@/components/AccountManagement/AccountManagerConsole.vue'
 import LoginView from '@/views/LoginView.vue'
+
 
 import { supabase } from '@/clients/supabase'
 
@@ -43,6 +45,12 @@ const router = createRouter({
         path: '/accountmanagerconsole',
         name: 'accountManagerConsole',
         component: AccountManagerConsole
+    },
+    {
+        path: '/platform/onboarding',
+        name: 'onboarding',
+        component: () => import('../views/OnboardingView.vue'),
+            meta: { requiresAuth: true }
     }
 ]
 })
