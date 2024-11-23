@@ -59,4 +59,3 @@ pnpm-debug.log*
 
 /src/frontend/dist/
 /src/frontend/node/
-/src/frontend/src/assets/
