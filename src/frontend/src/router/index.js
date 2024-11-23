@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import HomeView from '@/views/HomeView.vue'
 import DataView from "@/views/DataView.vue"
 import UnauthorizedView from '@/views/UnauthorizedView.vue'
 import AccountManagerConsole from '@/components/AccountManagement/AccountManagerConsole.vue'
+import LoginView from '@/views/LoginView.vue'
 
 import { supabase } from '@/clients/supabase'
-import LoginView from '@/views/LoginView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -18,7 +20,7 @@ const router = createRouter({
     {
         path: '/login',
         name: 'loginPage',
-        componet: LoginView
+        component: LoginView
     },
     {
         path: '/secrets',
