@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="secretContainer">
         <h1> Secret View </h1>
     </div>
 </template>
@@ -9,5 +9,8 @@
 </script>
 
 <style scoped>
-    
+.secretContainer
+{
+    height: 100%;
+}
 </style>

@@ -13,8 +13,15 @@ import { RouterLink } from 'vue-router';
 </script>
 
 <style scoped>
-    .routerLink
-    {
-    padding-right: 1em;
-    }
+nav
+{
+    background-color: rgb(122, 120, 118);
+    width: 100%;
+    height: 60px;
+}
+
+.routerLink
+{
+padding-right: 1em;
+}
 </style>

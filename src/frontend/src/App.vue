@@ -1,16 +1,17 @@
 <template>
   <div class="appContainer">
+
     <NavBar />
 
-    <section class="contentContainer">
-        <RouterView />
+    <div class="contentContainer">
+      <RouterView />
+    </div>
   
-    </section>
   </div>
 </template>
 
 <script setup>
-import NavBar from "@/components/NavBar.vue";
+import NavBar from "@/components/DebugNav.vue";
 import { RouterView } from 'vue-router';
 </script>
 
@@ -21,6 +22,11 @@ html
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+#spacer 
+{
+  height: 3em;
 }
 
 body 
@@ -38,13 +44,15 @@ body
 .appContainer
 {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .contentContainer
 {
-  background-color: aquamarine;
   height: 100%;
-  display: flex;
-  justify-content: center;
+  flex: 1;
+  overflow: hidden;
 }
+
 </style>

@@ -3,7 +3,7 @@
         <div class="welcomeWrapper">
             <h2> Welcome Serial Studier! </h2>
             <p id="welcomeText"> We will need some information to help you get started! </p>
-            <button id="getStartedButton"> Get Started! </button>
+            <button id="getStartedButton" @click="$emit('hideWelcomeComponent')"> Get Started! </button>
         </div>
     </div>
 </template>
@@ -21,6 +21,7 @@
     margin-top: auto;
     margin-bottom: auto;
     border-radius: 2em;
+    overflow: hidden;
 }
 
 .welcomeWrapper
