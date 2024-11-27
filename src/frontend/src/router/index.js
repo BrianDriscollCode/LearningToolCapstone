@@ -6,13 +6,14 @@ import DataView from "@/views/DataView.vue"
 import UnauthorizedView from '@/views/UnauthorizedView.vue'
 import AccountManagerConsole from '@/components/AccountManagement/AccountManagerConsole.vue'
 import LoginView from '@/views/LoginView.vue'
-
+import SignUpView from '@/views/SignUpView.vue'
 
 import { supabase } from '@/clients/supabase'
 
 
+
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+history: createWebHistory(process.env.BASE_URL),
   routes: [
     {
         path: '/',
@@ -25,6 +26,12 @@ const router = createRouter({
         component: LoginView
     },
     {
+        path: '/signup',
+        name: 'signUpPage',
+        component: SignUpView
+    },
+    
+    {
         path: '/secrets',
         name: 'secretPage',
         component: () => import('../views/SecretView.vue'),
@@ -35,7 +42,6 @@ const router = createRouter({
         names: 'unauthorizedPage',
         component: UnauthorizedView
     },
-    
     {
         path: '/data',
         name: 'dataPage',
@@ -49,10 +55,15 @@ const router = createRouter({
     {
         path: '/platform/onboarding',
         name: 'onboarding',
-        component: () => import('../views/OnboardingView.vue'),
+        component: () => import('../views/Platform/OnboardingView.vue'),
             meta: { requiresAuth: true }
-    }
-]
+    },
+    {
+        path: '/platform/dashboard',
+        name: 'userHome',
+        component: () => import('../views/Platform/DashboardView.vue'),
+            meta: { requiresAuth: true}
+    }]
 })
 
 let localUser;

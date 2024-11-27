@@ -23,6 +23,10 @@ import TopicForm from "@/components/UserPlatform/OnboardingProcess/TopicForm.vue
 
 import { reactive } from "vue";
 
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 let databaseInfo = reactive({
     subject: '',
     topicOne: '',
@@ -56,15 +60,18 @@ function fillSubjects(subject)
     console.log(databaseInfo.subject);
 }
 
-function fillTopics(topics)
+async function fillTopics(topics)
 {
+    databaseInfo.topicOne = topics.one;
+    databaseInfo.topicOneCompetency = topics.oneCompetency;
+    databaseInfo.topicTwo = topics.Two;
+    databaseInfo.topicTwoCompetency = topics.twoCompetency;
 
-    console.log(topics.one);
-    console.log(topics.oneCompetency);
-    console.log(topics.two);
-    console.log(topics.twoCompetency);
+    // update database
+    
+    // return data to see that it is updated and onboarding is finished
 
-
+    router.push('/platform/userHome');
 }
 </script>
 

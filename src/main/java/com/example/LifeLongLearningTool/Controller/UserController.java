@@ -1,13 +1,14 @@
 package com.example.LifeLongLearningTool.Controller;
 
+import com.example.LifeLongLearningTool.Dto.UserDTO;
 import com.example.LifeLongLearningTool.Entity.User;
 import com.example.LifeLongLearningTool.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -20,5 +21,51 @@ public class UserController {
     public List<User> getAllUsers()
     {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Long id)
+    {
+        return userService.getUserByID(id);
+    }
+
+    @GetMapping("/{name}/{id}")
+    public void setUserPersonNameById(@PathVariable String name, @PathVariable Long id)
+    {
+        userService.setUserPersonNameById(id, name);
+        System.out.println("LOG SET USER PERSON NAME");
+    }
+
+    @GetMapping("/{id}/{status}")
+    public void setUserOnboardingStatus(@PathVariable Long id, @PathVariable Boolean status)
+    {
+        userService.setUserOnboardingStatus(id, status);
+        System.out.println("SET USER ONBOARDING STATUS");
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<String> createUser(@RequestBody UserDTO userDTO)
+    {
+        UUID uuid = userDTO.getUuid();
+        System.out.println(uuid + " -uuid");
+        System.out.println(userDTO.getName() + " -get name");
+        System.out.println(userDTO.getEmail() + " -get email");
+        userService.createUser(uuid, userDTO.getName(), userDTO.getEmail());
+        return ResponseEntity.ok("User created successfully");
+    }
+
+    @GetMapping("/by-uuid/{uuid}")
+    public User getUserByUuid(@PathVariable String uuid)
+    {
+        System.out.println(userService.getUserByUuid(uuid) + " -FROM CONTROLLER");
+        return userService.getUserByUuid(uuid);
+    }
+
+    @GetMapping("/onboardingStatus/{uuid}")
+    public Boolean getOnboardingStatus(@PathVariable String uuid)
+    {
+        User user = userService.getUserByUuid(uuid);
+        System.out.println("UserController:" + user + " -FUNCTION: getOnboardingStatus");
+        return user.getOnboardingFinished();
     }
 }

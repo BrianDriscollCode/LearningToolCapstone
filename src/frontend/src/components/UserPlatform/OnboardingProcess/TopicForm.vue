@@ -25,7 +25,7 @@
                 </div>
                 <button 
                     id="getStartedButton"
-                     @click="$emit('fillTopics', topics)"
+                    @click="$emit('fillTopics', topics)"
                     > Next 
                 </button>
             </div>

@@ -12,6 +12,9 @@
                     <br />
                     <span> Last Login: </span>
                     {{ user.lastLogin}}
+                    <br />
+                    <span> Onboarding Status: </span>
+                    {{ user.onboardingFinished }}
                 </div>
             </div>
             
@@ -35,9 +38,8 @@ const fetchUsers = async () =>
   {
     const response = await fetch("/api/users");
     data.value = await response.json();
+    console.log(data.value[0].onboardingFinished);
     loading.value = false;
-
-
   }
   catch (err)
   {

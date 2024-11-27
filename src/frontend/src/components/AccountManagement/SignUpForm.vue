@@ -6,25 +6,26 @@
         <img id="logo" :src="logo" width="100" height="100"/>
       </div>
       
-      <h2 id="loginTitle"> Sign in to SerialStudier </h2>
+      <h2 id="loginTitle"> Sign up to SerialStudier </h2>
 
         
-
       <form @submit.prevent="login">
         
         <div class="formInnerWrapper">
 
-          <button id="googleSignInButton"> Sign in with Google </button>
+          <button id="googleSignInButton"> Sign up with Google </button>
           <div class="orSpacing">
             <hr />
           </div>
 
-          <input id="emailInput" type="email" placeholder="Email"  v-model="userInfo.email" />
+          <!--- turn to class instead of id-->
+          <input class="accountInput" type="email" placeholder="Email" v-model="userInfo.email" />
           <br />
-          <input id="passwordInput" type="password" placeholder="Password" v-model="userInfo.password" /> 
-          <button id="loginButton" @click="login"> Login </button> 
-
-          <p> Don't have an account? <RouterLink to="/signup"> Sign up </RouterLink> </p>
+          <input class="accountInput" type="password" placeholder="Password" v-model="userInfo.password" /> 
+          <br />
+          <input class="accountInput" type="text" placeholder="First Name" v-model="userInfo.firstName" /> 
+          
+          <button id="loginButton" @click="createAccount"> Sign up </button> 
           
         </div>
         
@@ -35,55 +36,62 @@
 
 <script setup>
 import { supabase } from '@/clients/supabase';
-import { reactive } from 'vue';
+import { reactive, defineEmits } from 'vue';
 import { useRouter } from "vue-router";
-import { useAccountStore } from '@/stores/account';
-import { RouterLink } from 'vue-router';
 import logo from '@/assets/mindMapPngTree.png';
 import xPNG from "@/assets/exitFlaticon.png";
 
 let userInfo = reactive({
   email: "bdriscoll407@gmail.com",
   password: "Imcool123!",
+  firstName: "Brian"
 });
 
 const router = useRouter();
-const account = useAccountStore();
+const emit = defineEmits(["signUpComplete"]);
 
-async function login()
+async function createAccount()
 {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: userInfo.email,
-    password: userInfo.password
-  });
+  const { data, error } = await supabase.auth.signUp(
+    {
+      email: userInfo.email,
+      password: userInfo.password,
+      firstName: userInfo.firstName
+    }
+  );
+  
   if (error)
   {
+    console.log();
     console.log(error);
   }
   else
   {
-    if (data.user)
+    console.log(data.user.id);
+
+    const response = await fetch('/api/users/create', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        uuid: data.user.id,
+        email: userInfo.email,
+        name: userInfo.firstName
+        
+      })
+    });
+
+    if (!response.ok)
     {
-      // updates pinia store
-      account.status = true;
-      let uuid = data.user.id;
-      try 
-      {
-        const response = await fetch(`/api/users/by-uuid/${uuid}`);
-        const userData = await response.json();
-    
-        console.log("COMPONENT - LOGIN FORM: " + userData);
-
-        account.name = userData.name;
-
-        router.push('/platform/dashboard');
-      }
-      catch (error)
-      {
-        console.log("COMPONENT - LOGIN FORM: " + error);
-      }
-      
+      console.error("Failed to create user: " + response);
     }
+    else
+    {
+      console.log("User created successfully!")
+      emit("signUpComplete");
+    }
+    
   }
 }
 
@@ -160,19 +168,7 @@ async function exit()
   border: .5px solid rgb(211, 211, 211);
 }
 
-#emailInput
-{
-  box-sizing: border-box;
-  width: 100%;
-  height: 50px;
-  margin-bottom: 2em;
-  padding: 0 0 0 1em;
-  margin: 0 0 2em 0;
-  border: 1px solid #ccc;
-  font-size: 1em;
-}
-
-#passwordInput
+.accountInput
 {
   box-sizing: border-box;
   width: 100%;
