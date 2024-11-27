@@ -10,8 +10,6 @@ import SignUpView from '@/views/SignUpView.vue'
 
 import { supabase } from '@/clients/supabase'
 
-
-
 const router = createRouter({
 history: createWebHistory(process.env.BASE_URL),
   routes: [

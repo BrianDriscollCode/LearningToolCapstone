@@ -38,6 +38,7 @@
 import { supabase } from '@/clients/supabase';
 import { reactive, defineEmits } from 'vue';
 import { useRouter } from "vue-router";
+import { config } from "@/config"
 import logo from '@/assets/mindMapPngTree.png';
 import xPNG from "@/assets/exitFlaticon.png";
 
@@ -62,51 +63,46 @@ async function createAccount()
   
   if (error)
   {
-    console.log();
-    console.log(error);
+    if (config.debug) console.log(error);
   }
   else
   {
-    console.log(data.user.id);
-
-    const response = await fetch('/api/users/create', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-        uuid: data.user.id,
-        email: userInfo.email,
-        name: userInfo.firstName
-        
-      })
-    });
-
-    if (!response.ok)
+    if (config.debug) console.log(data.user.id);
+    try 
     {
-      console.error("Failed to create user: " + response);
-    }
-    else
+      const response = await fetch('/api/users/create', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          uuid: data.user.id,
+          email: userInfo.email,
+          name: userInfo.firstName
+          
+        })
+      });
+
+      if (!response.ok)
+      {
+        if (config.debug) console.error("SIGNUPFORM: Failed to create user - " + response);
+      }
+      else
+      {
+        if (config.debug) console.log("SIGNUP FORM: User created successfully!")
+        emit("signUpComplete");
+      }
+    } 
+    catch (error)
     {
-      console.log("User created successfully!")
-      emit("signUpComplete");
+      if (config.debug) console.error("SIGNUP FORM: " + error);
     }
-    
   }
 }
 
 async function exit()
 {
-  const localUser = await supabase.auth.getSession();
-
-  if (localUser.data.session)
-  {
-    router.push('/unauthorized');
-  }
-  else
-  {
-    router.push('/')
-  }
+  router.push("/");
 }
 
 </script>

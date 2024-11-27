@@ -2,6 +2,7 @@
   <h1> Home </h1>
 
   <button v-show="loggedIn" @click="goDashboard"> Go to Dashboard </button>  
+  
 </template>
 
 <script setup>

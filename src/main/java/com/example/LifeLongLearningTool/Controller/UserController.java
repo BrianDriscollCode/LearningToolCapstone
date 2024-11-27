@@ -47,9 +47,6 @@ public class UserController {
     public ResponseEntity<String> createUser(@RequestBody UserDTO userDTO)
     {
         UUID uuid = userDTO.getUuid();
-        System.out.println(uuid + " -uuid");
-        System.out.println(userDTO.getName() + " -get name");
-        System.out.println(userDTO.getEmail() + " -get email");
         userService.createUser(uuid, userDTO.getName(), userDTO.getEmail());
         return ResponseEntity.ok("User created successfully");
     }
@@ -57,7 +54,6 @@ public class UserController {
     @GetMapping("/by-uuid/{uuid}")
     public User getUserByUuid(@PathVariable String uuid)
     {
-        System.out.println(userService.getUserByUuid(uuid) + " -FROM CONTROLLER");
         return userService.getUserByUuid(uuid);
     }
 
@@ -65,7 +61,6 @@ public class UserController {
     public Boolean getOnboardingStatus(@PathVariable String uuid)
     {
         User user = userService.getUserByUuid(uuid);
-        System.out.println("UserController:" + user + " -FUNCTION: getOnboardingStatus");
         return user.getOnboardingFinished();
     }
 }

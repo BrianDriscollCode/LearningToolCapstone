@@ -13,6 +13,7 @@
 <script setup>
 import { supabase } from '@/clients/supabase';
 import { reactive } from 'vue';
+import { config } from "@/config"
 
 let userInfo = reactive({
   email: "",
@@ -25,11 +26,11 @@ async function logout()
 
   if (error)
   {
-    console.log(error);
+    if (config.debug) console.log(error);
   }
   else 
   {
-    console.log("Sign out success");
+    if (config.debug) console.log("Sign out success");
   }
 }
 

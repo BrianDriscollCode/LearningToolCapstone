@@ -157,14 +157,6 @@ async function insertName()
   {
     const response = await fetch(`/api/users/${userName.value}/1`);
     console.log(response);
-    // const response = await fetch(`/api/users/${userName.value}/1`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ name: userName.value })
-    // });
-    // console.log(response);
   }
   catch (err)
   {

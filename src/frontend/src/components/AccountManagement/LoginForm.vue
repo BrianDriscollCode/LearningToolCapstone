@@ -39,6 +39,7 @@ import { reactive } from 'vue';
 import { useRouter } from "vue-router";
 import { useAccountStore } from '@/stores/account';
 import { RouterLink } from 'vue-router';
+import { config } from "@/config"
 import logo from '@/assets/mindMapPngTree.png';
 import xPNG from "@/assets/exitFlaticon.png";
 
@@ -58,7 +59,7 @@ async function login()
   });
   if (error)
   {
-    console.log(error);
+    if (config.debug) console.log(error);
   }
   else
   {
@@ -72,7 +73,7 @@ async function login()
         const response = await fetch(`/api/users/by-uuid/${uuid}`);
         const userData = await response.json();
     
-        console.log("COMPONENT - LOGIN FORM: " + userData);
+        if (config.debug) console.log("COMPONENT - LOGIN FORM: " + userData);
 
         account.name = userData.name;
 
@@ -80,7 +81,7 @@ async function login()
       }
       catch (error)
       {
-        console.log("COMPONENT - LOGIN FORM: " + error);
+        if (config.debug) console.log("COMPONENT - LOGIN FORM: " + error);
       }
       
     }
@@ -89,16 +90,7 @@ async function login()
 
 async function exit()
 {
-  const localUser = await supabase.auth.getSession();
-
-  if (localUser.data.session)
-  {
-    router.push('/unauthorized');
-  }
-  else
-  {
-    router.push('/')
-  }
+  router.push('/')
 }
 
 </script>
