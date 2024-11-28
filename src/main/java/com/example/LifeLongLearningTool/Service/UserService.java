@@ -55,4 +55,10 @@ public class UserService {
         user.setOnboardingFinished(false);
         userRepository.save(user);
     }
+
+    public void deleteUserWithUUID(UUID uuid)
+    {
+        User user = userRepository.findByUuid(uuid);
+        userRepository.delete(user);;
+    }
 }

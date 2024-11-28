@@ -20,7 +20,7 @@ class UserServiceTest {
     @Autowired
     UserService userService;
 
-    // Testing return types of database fields with function: getUserByID()
+    // Function: getUserByID()
     @Test
     void testGetUserByID_TypeObject()
     {
@@ -49,7 +49,7 @@ class UserServiceTest {
         Assertions.assertInstanceOf(UUID.class, user.getUUID());
     }
 
-    //Testing return type of function: getUserByUUID()
+    //Function: getUserByUUID()
     @Test
     void testGetUserByUUID_TypeObject()
     {
@@ -58,6 +58,7 @@ class UserServiceTest {
         Assertions.assertInstanceOf(User.class, user);
     }
 
+    // Function: setUserPersonNameByID
     @Test
     void testSetUserPersonNameByID()
     {
@@ -71,8 +72,36 @@ class UserServiceTest {
         userService.setUserPersonNameByID(1L, tempName);
     }
 
+    // Function: setUserOnboardingStatus
+    @Test
+    void testSetUserOnboardingStatus()
+    {
+        User user = userService.getUserByID(1L);
+        boolean currentStatus = user.getOnboardingFinished();
 
+        userService.setUserOnboardingStatus(1L, !currentStatus);
+        User updatedUser = userService.getUserByID(1L);
+        Assertions.assertEquals(!currentStatus, updatedUser.getOnboardingFinished());
 
+        userService.setUserOnboardingStatus(1L, currentStatus);
+    }
 
+    // Function: createUser && deleteUserWithUUID
+    @Test
+    void testCreateUserDeleteUser()
+    {
+        UUID uuid = UUID.randomUUID();
+        userService.createUser(uuid, "Jake", "Random07@gmail.com");
+
+        User user = userService.getUserByUuid(uuid.toString());
+        Assertions.assertInstanceOf(User.class, user);
+        Assertions.assertEquals(user.getUUID(), uuid);
+        Assertions.assertEquals(user.getName(), "Jake");
+        Assertions.assertEquals(user.getEmail(), "Random07@gmail.com");
+
+        userService.deleteUserWithUUID(uuid);
+        User deletedUser = userService.getUserByUuid(uuid.toString());
+        Assertions.assertNull(deletedUser);
+    }
 
 }
