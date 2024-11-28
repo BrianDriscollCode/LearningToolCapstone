@@ -1,0 +1,3 @@
+process.env.VUE_APP_SUPABASE_URL= 'https://zekxydhvrvjvgcxmkgbl.supabase.co';
+process.env.VUE_APP_SUPABASE_KEY= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpla3h5ZGh2cnZqdmdjeG1rZ2JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIyMzcwOTUsImV4cCI6MjA0NzgxMzA5NX0.LMg9n2uBPrMA5UaUh0E4uayJjbk0sd6S8uqkdT2HGe0';
+process.env.VUE_APP_DEBUG= true;

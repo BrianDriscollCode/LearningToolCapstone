@@ -1,12 +1,12 @@
 <template>
   <div class="appContainer">
-
     <NavBar />
 
     <div :class="['contentContainer', { 'overflowAllowed': overflowPage }]">
       <RouterView />
     </div>
 
+    <p> Hello </p>
   </div>
 </template>
 

@@ -1,13 +1,11 @@
 package com.example.LifeLongLearningTool.Service;
 
-import com.example.LifeLongLearningTool.Dto.UserDTO;
 import com.example.LifeLongLearningTool.Entity.User;
 import com.example.LifeLongLearningTool.Dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -34,7 +32,7 @@ public class UserService {
         return userRepository.findByUuid(uuidReturnObject);
     }
 
-    public void setUserPersonNameById(Long id, String name)
+    public void setUserPersonNameByID(Long id, String name)
     {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
         user.setName(name);

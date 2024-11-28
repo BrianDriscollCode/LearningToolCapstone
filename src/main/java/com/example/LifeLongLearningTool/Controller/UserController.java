@@ -32,7 +32,7 @@ public class UserController {
     @GetMapping("/{name}/{id}")
     public void setUserPersonNameById(@PathVariable String name, @PathVariable Long id)
     {
-        userService.setUserPersonNameById(id, name);
+        userService.setUserPersonNameByID(id, name);
         System.out.println("LOG SET USER PERSON NAME");
     }
 
