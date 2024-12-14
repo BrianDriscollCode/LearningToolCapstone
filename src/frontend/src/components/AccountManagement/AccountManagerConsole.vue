@@ -27,6 +27,38 @@
         <input type="name" placeholder="name" v-model="insertAccountInfo.name"/>
         <button @click="insertAccount"> Test </button>
       </div>
+
+      <div>
+        <h3> Create Subject </h3>
+        <input type="text" placeholder="Name" v-model="insertSubjectInfo.name"/>
+        <input type="text" placeholder="userID" v-model="insertSubjectInfo.uuid"/>
+        <button @click="createSubject"> Submit Subject </button>
+      </div>
+
+      <div>
+        <h3> Create Topic </h3>
+        <input type="text" placeholder="Name" v-model="insertTopicInfo.name"/>
+        <input type="text" placeholder="userID" v-model="insertTopicInfo.uuid"/>
+        <select name="competency" v-model="insertTopicInfo.competency">
+          <option value="BEGINNER"> BEGINNER </option>
+          <option value="NOVICE"> NOVICE </option>
+          <option value="INTERMEDIATE"> INTERMEDIATE </option>
+          <option value="EXPERT"> EXPERT </option>
+          <option value="MASTER"> MASTER </option>
+        </select>
+        <input type="text" placeholder="subjectID" v-model="insertTopicInfo.subjectID"/>
+        <button @click="createTopic"> Submit Subject </button>
+      </div>
+
+      <div>
+        <h3> Print Store </h3>
+        <button @click="printStore"> Submit </button>
+      </div>
+
+      <div> 
+        <h3> Create Study Sessions </h3>
+        <button @click="createStudySessions"> Submit </button>
+      </div>
     </form>
 
 
@@ -38,6 +70,8 @@ import { supabase } from '@/clients/supabase';
 import { reactive, ref } from 'vue';
 import { useAccountStore } from '@/stores/account';
 
+const account = useAccountStore();
+
 let userInfo = reactive({
   email: "",
   password: "",
@@ -47,9 +81,19 @@ let insertAccountInfo = reactive({
   email: "bdriscoll407@gmail.com",
   password: "Imcool123!",
   name: "Brian"
-})
+});
 
-const account = useAccountStore();
+const insertSubjectInfo = reactive({
+  name: "History",
+  uuid: account.uuid
+});
+
+const insertTopicInfo = reactive({
+  name: "Revolutionary War",
+  competency: "NOVICE",
+  uuid: account.uuid,
+  subjectID: 1
+}); 
 
 let userName = ref("");
 
@@ -164,7 +208,99 @@ async function insertName()
   }
 }
 
+async function createSubject()
+{
+  try
+  {
+    const response = await fetch("/api/subjects/create");
+
+    if (!response.ok)
+    {
+      console.error("ACCOUNT MANAGER CONSOLE: Failed to create subject - ")
+    }
+    else
+    {
+      console.log("ACCOUNT MANAGER CONSOLE: Subject created successfully!");
+    }
+  }
+  catch (error)
+  {
+    console.error("ACCOUNT MANAGER CONSOLE: Create subject failed - " + error);
+  }
+}
+
+async function createTopic()
+{
+  try 
+  {
+    const response = await fetch("/api/topics/create", {
+      method: "POST",
+      headers:
+      {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: insertTopicInfo.name,
+        uuid: insertTopicInfo.uuid,
+        competency: insertTopicInfo.competency,
+        subjectID: insertTopicInfo.subjectID
+      })
+    });
+
+    if (!response.ok)
+    {
+      console.error("ACCOUNT MANAGER CONSOLE: Failed to create topic - ")
+    }
+    else
+    {
+      console.log("ACCOUNT MANAGER CONSOLE: Topic created successfully!");
+    }
+  }
+  catch (error)
+  {
+    console.error("ACCOUNT MANAGER CONSOLE: create topics failed " + error);
+  }
 
 
+}
+
+const printStore = () => 
+{
+  console.log(account.uuid);
+}
+
+const createStudySessions = async () =>
+{
+
+  let topicID = 1;
+  let sessionCount = 5;
+
+  try 
+  {
+    const response = await fetch(`/api/studySessions/generate?topicID=${topicID}&sessionCount=${sessionCount}`, {
+      method: "GET",
+      headers:
+      {
+        "Content-Type": "application/json"
+      },
+    });
+
+    if (!response.ok)
+    {
+      console.error(`Failed to create study sessions. Status: ${response.status}`);
+    }
+    else
+    {
+      const data = await response.text();
+      console.log("Response:", data);
+    }
+
+  }
+  catch (error)
+  {
+    console.error("ACCOUNT MANAGER CONOLE: " + error);
+  }
+
+}
 
 </script>

@@ -76,6 +76,7 @@ async function login()
         if (config.debug) console.log("COMPONENT - LOGIN FORM: " + userData);
 
         account.name = userData.name;
+        account.uuid = uuid;
 
         router.push('/platform/dashboard');
       }

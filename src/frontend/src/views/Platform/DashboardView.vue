@@ -19,6 +19,26 @@ const state = reactive({
 
 const router = useRouter();
 
+const generateData = async (uuid, howManyDays) => 
+{
+    try 
+    {
+        const dbResponse = await fetch(`/api/studySessions/generate?uuid=${uuid}&howManyDays=${howManyDays}`);
+
+        if (!dbResponse.ok)
+        {
+            throw new Error(`Status: ${dbResponse.status}`)
+        }
+
+        const dataResponse = await dbResponse.text();
+        if (config.debug) console.log("DASHBOARD VIEW: Data Response - " + dataResponse);
+    }   
+    catch (error)
+    {
+        if (config.debug) console.error("DASHBOARD VIEW: Error generating data - " + error);
+    }
+}
+
 const checkOnboarding = async () =>
 {
     const sessionResponse = await supabase.auth.getSession();
@@ -32,7 +52,7 @@ const checkOnboarding = async () =>
         const dbResponse = await fetch(`/api/users/by-uuid/${uuid}`);
         const onboardingResponse = await dbResponse.json();
         
-        if (config.debug) console.log("DASHBOARD VIEW Onboarding status -", onboardingResponse.onboardingFinished);
+        if (config.debug) console.log("DASHBOARD VIEW: Onboarding status -", onboardingResponse.onboardingFinished);
         
         if (!onboardingResponse.onboardingFinished)
         {
@@ -41,6 +61,13 @@ const checkOnboarding = async () =>
         else
         {
             state.loading = false;
+
+            if (!onboardingResponse.intialDataGenerated)
+            {  
+                if (config.debug) console.log("DASHBOARD VIEW: NEED TO GENERATE DATA");
+                let howManyDays = 31;
+                generateData(uuid, howManyDays);
+            }
         }
     }
     catch (error)
@@ -49,7 +76,9 @@ const checkOnboarding = async () =>
     }
 
 }
+
 checkOnboarding();
+
 
 </script>
 

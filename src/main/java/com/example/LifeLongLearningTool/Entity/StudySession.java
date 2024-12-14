@@ -37,24 +37,29 @@ public class StudySession {
     {
         return userID;
     }
+    public void setUserID(User userID) { this.userID = userID; }
 
     public Topic getTopicID()
     {
         return topicID;
     }
+    public void setTopicID(Topic topicID) { this.topicID = topicID; }
 
     public Boolean getCompleted()
     {
         return completed;
     }
+    public void setCompleted(Boolean completed) { this.completed = completed; }
 
     public Boolean getMoreStudyRequired()
     {
         return moreStudyRequired;
     }
+    public void setMoreStudyRequired(Boolean moreStudyRequired) { this.moreStudyRequired = moreStudyRequired; }
 
     public Date getDate()
     {
         return date;
     }
+    public void setDate(Date date) { this.date = date; }
 }

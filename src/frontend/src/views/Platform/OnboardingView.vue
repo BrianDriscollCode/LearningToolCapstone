@@ -20,12 +20,16 @@
 import WelcomeForm from "@/components/UserPlatform/OnboardingProcess/WelcomeForm.vue";
 import SubjectForm from "@/components/UserPlatform/OnboardingProcess/SubjectForm.vue";
 import TopicForm from "@/components/UserPlatform/OnboardingProcess/TopicForm.vue";
+import { useAccountStore } from "@/stores/account";
 
 import { reactive } from "vue";
+
 
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+
+const account = useAccountStore();
 
 let databaseInfo = reactive({
     subject: '',
@@ -56,22 +60,50 @@ function fillSubjects(subject)
     showForms.welcome = false;
     showForms.subject = false;
     showForms.topic = true;
-
-    console.log(databaseInfo.subject);
 }
 
 async function fillTopics(topics)
 {
     databaseInfo.topicOne = topics.one;
     databaseInfo.topicOneCompetency = topics.oneCompetency;
-    databaseInfo.topicTwo = topics.Two;
+    databaseInfo.topicTwo = topics.two;
     databaseInfo.topicTwoCompetency = topics.twoCompetency;
 
     // update database
-    
     // return data to see that it is updated and onboarding is finished
 
-    router.push('/platform/userHome');
+    console.log(databaseInfo.subject);
+    console.log(databaseInfo.topicOne);
+    console.log(databaseInfo.topicOneCompetency);
+    console.log(databaseInfo.topicTwo);
+    console.log(databaseInfo.topicTwoCompetency);
+    console.log(account.uuid);
+
+    const response = await fetch("/api/onboarding/create", {
+        method: "POST",
+        headers:
+        {
+            "Content-Type" : "application/json",
+        },
+        body: JSON.stringify({
+            uuid: account.uuid,
+            subjectName: databaseInfo.subject,
+            topicName1: databaseInfo.topicOne,
+            competency1: databaseInfo.topicOneCompetency,
+            topicName2: databaseInfo.topicTwo,
+            competency2: databaseInfo.topicTwoCompetency
+        })
+    });
+
+    if (!response.ok)
+    {
+        console.log("ONBOARDING VIEW: bad response - " + response);
+    }
+    else
+    {
+        console.log("ONBOARDING VIEW: successful onboarding response!");
+        router.push("/platform/dashboard");
+    }
 }
 </script>
 

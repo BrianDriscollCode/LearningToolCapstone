@@ -24,7 +24,7 @@ describe('LoginForm.vue', () => {
 
   it('logs in successfully and navigates to dashboard', async () => {
     vi.spyOn(supabase.auth, 'signInWithPassword').mockResolvedValueOnce({
-        data: { user: { id: '123'} },
+        data: { user: { id: 'fb984c31-4f57-4552-8739-e75dd4c5bd7d'} },
         error: null,
     });
 
@@ -44,6 +44,7 @@ describe('LoginForm.vue', () => {
     // Testing that reactive variable gets populated with login info
     expect(accountStore.status).toBe(true);
     expect(accountStore.name).toBe('John Doe');
+    expect(accountStore.uuid).toBe('fb984c31-4f57-4552-8739-e75dd4c5bd7d');
     // Testing that the page reroutes correctly
     expect(mockRouterPush).toHaveBeenCalledWith('/platform/dashboard');
   });
