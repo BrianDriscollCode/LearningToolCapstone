@@ -2,6 +2,7 @@ package com.example.LifeLongLearningTool.Entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -26,7 +27,7 @@ public class StudySession {
     private Boolean moreStudyRequired;
 
     @Column(name = "date", nullable = false)
-    private Date date;
+    private LocalDate date;
 
     public Long getStudySessions()
     {
@@ -57,9 +58,9 @@ public class StudySession {
     }
     public void setMoreStudyRequired(Boolean moreStudyRequired) { this.moreStudyRequired = moreStudyRequired; }
 
-    public Date getDate()
+    public LocalDate getDate()
     {
         return date;
     }
-    public void setDate(Date date) { this.date = date; }
+    public void setDate(LocalDate date) { this.date = date; }
 }

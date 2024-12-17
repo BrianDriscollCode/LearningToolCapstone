@@ -6,7 +6,9 @@ export const useAccountStore = defineStore('account', {
         return { 
             status: false,
             name: '',
-            uuid: ''
+            uuid: '',
+            onboardingFinished: false,
+            initialDataGenerated: false
         }
     },
 

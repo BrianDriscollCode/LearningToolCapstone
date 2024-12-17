@@ -40,13 +40,13 @@ public class OnboardingService {
         subjectRepository.save(subject);
 
         Topic topic1 = new Topic();
-        topic1.setSubjectID(subject);
+        topic1.setSubject(subject);
         topic1.setCompetency(comp1);
         topic1.setName(topicName1);
         topicRepository.save(topic1);
 
         Topic topic2 = new Topic();
-        topic2.setSubjectID(subject);
+        topic2.setSubject(subject);
         topic2.setCompetency(comp2);
         topic2.setName(topicName2);
         topicRepository.save(topic2);

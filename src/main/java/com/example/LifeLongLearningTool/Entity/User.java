@@ -29,6 +29,9 @@ public class User {
     @Column(name = "OnboardingFinished")
     private Boolean onboardingFinished;
 
+    @Column(name = "initialDataGenerated")
+    private Boolean initialDataGenerated;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Subject> subjects = new HashSet<>();
 
@@ -80,5 +83,9 @@ public class User {
     {
         this.onboardingFinished = onboardingFinished;
     }
+
+    public Boolean getInitialDataGenerated() {return initialDataGenerated; }
+
+    public void setInitialDataGenerated(Boolean initialDataGenerated) { this.initialDataGenerated = initialDataGenerated; }
 
 }

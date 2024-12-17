@@ -12,6 +12,7 @@ import { supabase } from '@/clients/supabase';
 import { useRouter } from 'vue-router'; 
 import { reactive } from "vue"
 import { config } from "@/config"
+import { useAccountStore } from "@/stores/account";
 
 const state = reactive({
     loading: true
@@ -19,11 +20,14 @@ const state = reactive({
 
 const router = useRouter();
 
-const generateData = async (uuid, howManyDays) => 
+const account = useAccountStore();
+
+// generate the study session data during onboarding
+const generateData = async (uuid) => 
 {
     try 
     {
-        const dbResponse = await fetch(`/api/studySessions/generate?uuid=${uuid}&howManyDays=${howManyDays}`);
+        const dbResponse = await fetch(`/api/studySessions/generate?uuid=${uuid}`);
 
         if (!dbResponse.ok)
         {
@@ -39,13 +43,27 @@ const generateData = async (uuid, howManyDays) =>
     }
 }
 
+// Check onboarding and initialDataGenerated
+// If onboarding == false, send to onboaridng process
+// If initialDataGenerated == false, generate data.
 const checkOnboarding = async () =>
 {
+
     const sessionResponse = await supabase.auth.getSession();
     let uuid = sessionResponse.data.session.user.id;
     
     if (config.debug) console.log("DASHBOARD VIEW: Uuid -", uuid);
-    
+    console.log("DASHBOARD VIEW: Store onboarding: " + account.onboardingFinished);
+    console.log("DASHBOARD VIEW: Store initial data: " + account.initialDataGenerated);
+
+    // Check account store to prevent unneccessary DB calls if possible
+    if (account.onboardingFinished == true && account.initialDataGenerated == true)
+    {
+        if (config.debug) console.log("DASHBOARD VIEW: Store shows account is onboarded");
+        state.loading = false;
+        return;
+    }
+
     // See if user has gone through onboarding process
     try 
     {
@@ -56,18 +74,33 @@ const checkOnboarding = async () =>
         
         if (!onboardingResponse.onboardingFinished)
         {
+            // Send to onboarding process
             router.push("/platform/onboarding");
         }
         else
         {
-            state.loading = false;
-
-            if (!onboardingResponse.intialDataGenerated)
+            // Generate Data
+            if (!onboardingResponse.initialDataGenerated)
             {  
-                if (config.debug) console.log("DASHBOARD VIEW: NEED TO GENERATE DATA");
-                let howManyDays = 31;
-                generateData(uuid, howManyDays);
+                if (config.debug)
+                {
+                    console.log("DASHBOARD VIEW: need to generate data");
+                    console.log("intialDataGenerated: ", onboardingResponse.initialDataGenerated);
+                    console.log("Response: ", onboardingResponse);
+                }
+              
+                generateData(uuid);
             }
+            else
+            {
+                if (config.debug)
+                {
+                    console.log("DASHBOARD VIEW: data has already been generated");
+                    console.log("intialDataGenerated: ", onboardingResponse.initialDataGenerated);
+                }
+            }
+
+            state.loading = false;
         }
     }
     catch (error)

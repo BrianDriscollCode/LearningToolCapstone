@@ -41,7 +41,7 @@ public class TopicService {
 
         Topic topic = new Topic();
         topic.setName(name);
-        topic.setSubjectID(subject);
+        topic.setSubject(subject);
         topic.setCompetency(comp);
         topicRepository.save(topic);
     }

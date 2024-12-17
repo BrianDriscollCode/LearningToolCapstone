@@ -65,9 +65,9 @@ function fillSubjects(subject)
 async function fillTopics(topics)
 {
     databaseInfo.topicOne = topics.one;
-    databaseInfo.topicOneCompetency = topics.oneCompetency;
+    databaseInfo.topicOneCompetency = topics.oneCompetency.toUpperCase();
     databaseInfo.topicTwo = topics.two;
-    databaseInfo.topicTwoCompetency = topics.twoCompetency;
+    databaseInfo.topicTwoCompetency = topics.twoCompetency.toUpperCase();
 
     // update database
     // return data to see that it is updated and onboarding is finished

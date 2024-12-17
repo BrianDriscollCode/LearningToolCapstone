@@ -36,9 +36,9 @@ public class StudySessionController {
     }
 
     @GetMapping("/generate")
-    public ResponseEntity<String> generateSessions(@RequestParam UUID uuid, @RequestParam int howManyDays)
+    public ResponseEntity<String> generateSessions(@RequestParam UUID uuid)
     {
-        studySessionService.generateStudySession(uuid, howManyDays);
+        studySessionService.generateStudySession(uuid);
         return ResponseEntity.ok("test");
     }
 }

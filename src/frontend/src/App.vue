@@ -46,6 +46,8 @@ const initSession = async () =>
       
       account.name = userData.name;
       account.uuid = uuid;
+      account.onboardingFinished = userData.onboardingFinished;
+      account.initialDataGenerated = userData.initialDataGenerated;
     }
     catch (tryError)
     {

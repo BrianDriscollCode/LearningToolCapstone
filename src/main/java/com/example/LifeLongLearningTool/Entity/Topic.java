@@ -15,7 +15,7 @@ public class Topic {
 
     @ManyToOne
     @JoinColumn(name="SubjectID", nullable = false)
-    private Subject subjectID;
+    private Subject subject;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -33,11 +33,11 @@ public class Topic {
         return topicID;
     }
 
-    public Subject getSubjectID()
+    public Subject getSubject()
     {
-        return subjectID;
+        return subject;
     }
-    public void setSubjectID(Subject subjectID) { this.subjectID = subjectID; }
+    public void setSubject(Subject subject) { this.subject = subject; }
 
     public String getName()
     {

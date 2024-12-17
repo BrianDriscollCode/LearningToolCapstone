@@ -2,6 +2,9 @@ package com.example.LifeLongLearningTool.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "Subjects")
 public class Subject {
@@ -15,6 +18,9 @@ public class Subject {
 
     @Column(name = "Name", nullable = false)
     private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subject")
+    private Set<Topic> topics = new HashSet<>();
 
     public Long getSubjectID()
     {
