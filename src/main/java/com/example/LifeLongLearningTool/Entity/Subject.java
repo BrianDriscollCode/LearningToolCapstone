@@ -27,11 +27,11 @@ public class Subject {
         return subjectID;
     }
 
-    public User getUser()
+    public User getUserID()
     {
         return user;
     }
-    public void setUser(User user) { this.user = user; }
+    public void setUserID(User user) { this.user = user; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

@@ -37,10 +37,9 @@ public class SubjectService {
             throw new IllegalArgumentException("User with UUID " + uuid + " not found.");
         }
         System.out.println("CRASH1");
-        subject.setUser(user);
+        subject.setUserID(user);
         System.out.println("USER: " + user);
         subject.setName(name);
         subjectRepository.save(subject);
     }
-    //User user = userRepository.findById(userID).orElseThrow(() -> new RuntimeException("User cannot be found with ID"));
 }

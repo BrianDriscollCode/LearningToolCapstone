@@ -34,10 +34,7 @@ public class StudySession {
         return studySessionID;
     }
 
-    public User getUserID()
-    {
-        return userID;
-    }
+    public User getUserID() { return userID; }
     public void setUserID(User userID) { this.userID = userID; }
 
     public Topic getTopicID()

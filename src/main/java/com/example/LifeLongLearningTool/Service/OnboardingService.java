@@ -36,7 +36,7 @@ public class OnboardingService {
 
         Subject subject = new Subject();
         subject.setName(subjectName);
-        subject.setUser(user);
+        subject.setUserID(user);
         subjectRepository.save(subject);
 
         Topic topic1 = new Topic();

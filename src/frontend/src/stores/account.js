@@ -1,28 +1,30 @@
 import { defineStore } from 'pinia'
 
 export const useAccountStore = defineStore('account', {
-    state: () => 
-    {
+    state: () => {
         return { 
             status: false,
             name: '',
-            uuid: '',
-            onboardingFinished: false,
+            // Either get item or empty
+            uuid: localStorage.getItem('uuid') || '',  
             initialDataGenerated: false
         }
     },
 
-    actions: 
-    {
-        logOut()
-        {
+    actions: {
+        // Processes for login and logout to hydrate data for store.
+        // Also uses localStorage for refresh persistence.
+        // APP level will always use SupaBase, but platform level will use store
+        logOut() {
             this.status = false;
+            this.uuid = '';  
+            localStorage.removeItem('uuid'); 
         },
 
-        logIn()
-        {
+        logIn(uuid) {
             this.status = true;
+            this.uuid = uuid; 
+            localStorage.setItem('uuid', uuid); 
         }
-    
     }
-})
+});

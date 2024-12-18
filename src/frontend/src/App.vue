@@ -6,7 +6,6 @@
       <RouterView />
     </div>
 
-    <p> Hello </p>
   </div>
 </template>
 

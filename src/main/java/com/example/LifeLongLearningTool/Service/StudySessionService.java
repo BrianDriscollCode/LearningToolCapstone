@@ -19,8 +19,6 @@ import java.util.*;
 
 @Service
 public class StudySessionService {
-
-
     private UserRepository userRepository;
     private SubjectRepository subjectRepository;
     private TopicRepository topicRepository;
@@ -39,6 +37,13 @@ public class StudySessionService {
     public List<StudySession> getAllStudySessions()
     {
         return studySessionRepository.findAll();
+    }
+
+    public List<StudySession> getUserStudySessions(UUID uuid) {
+        User user = userRepository.findByUuid(uuid);
+        List<StudySession> sessions = studySessionRepository.findByUserID(user);
+        System.out.println("Sessions: " + sessions);
+        return studySessionRepository.findByUserID(user);
     }
 
     // generate initial study sessions during onboarding
@@ -86,7 +91,7 @@ public class StudySessionService {
             if (daysOnTracker < 2)
             {
                 StudySession newStudySession = new StudySession();
-                newStudySession.setUserID(topic.getSubject().getUser());
+                newStudySession.setUserID(topic.getSubject().getUserID());
                 newStudySession.setDate(currentDate);
                 newStudySession.setMoreStudyRequired(true);
                 newStudySession.setTopicID(topic);

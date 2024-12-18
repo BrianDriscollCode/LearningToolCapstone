@@ -2,11 +2,18 @@
     <div class="userHomeContainer">
         <Loader v-show="state.loading"/>
         <NextStudySession v-show="!state.loading"/>
+
+        <div class="otherOptionsContainer">
+            <button @click="goToSchedule"> Schedule </button>
+            <button @click="goToLearningMap"> Learning Map </button>
+            <DashboardStatistics />
+        </div>
     </div>
 </template>
 
 <script setup>
 import NextStudySession from '@/components/UserPlatform/NextStudySession.vue';
+import DashboardStatistics from '@/components/UserPlatform/DashboardStatistics.vue';
 import Loader from "@/components/Widgets/LoaderAnim.vue"
 import { supabase } from '@/clients/supabase';
 import { useRouter } from 'vue-router'; 
@@ -19,8 +26,17 @@ const state = reactive({
 });
 
 const router = useRouter();
-
 const account = useAccountStore();
+
+const goToSchedule = () =>
+{
+    router.push("/platform/schedule");
+}
+
+const goToLearningMap = () =>
+{
+    router.push("/platform/learningMap");
+}
 
 // generate the study session data during onboarding
 const generateData = async (uuid) => 
@@ -44,7 +60,7 @@ const generateData = async (uuid) =>
 }
 
 // Check onboarding and initialDataGenerated
-// If onboarding == false, send to onboaridng process
+// If onboarding == false, send to onboarding process
 // If initialDataGenerated == false, generate data.
 const checkOnboarding = async () =>
 {
@@ -113,19 +129,45 @@ const checkOnboarding = async () =>
 checkOnboarding();
 
 
+
 </script>
 
 <style scoped>
 .userHomeContainer
 {
+    padding-top: 2em;
     height: 100%;
-    background-color: rgb(77, 77, 77);
+    background-color: rgb(82, 74, 65);
     display: flex;
-    justify-content: center;
     align-items: center;
+    flex-direction: column;
    
 }
 
+button {
+    background-color: rgb(230, 230, 230);
+    padding: 1em 2em;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 1em;
+}
+
+button:hover
+{
+    background-color: rgb(123, 255, 255);
+}
+
+.otherOptionsContainer
+{
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
 
 
 </style>
