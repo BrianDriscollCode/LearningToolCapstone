@@ -39,6 +39,7 @@ const getStudySessions = async () =>
     const studySessions = await dbResponse.json();
 
     studySessionList.sessions = studySessions;
+    console.log("NEXTSTUDYSESSION:getStudySessions:UUID-" + uuid);
 }
 
 const getCurrentDate = () => {

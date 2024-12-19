@@ -33,7 +33,8 @@ public class SubjectService {
         Subject subject = new Subject();
         System.out.println("UUID" + uuid);
         User user = userRepository.findByUuid(uuid);
-        if (user == null) {
+        if (user == null)
+        {
             throw new IllegalArgumentException("User with UUID " + uuid + " not found.");
         }
         System.out.println("CRASH1");

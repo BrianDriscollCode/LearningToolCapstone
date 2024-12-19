@@ -3,7 +3,7 @@
         <Loader v-show="state.loading"/>
         <NextStudySession v-show="!state.loading"/>
 
-        <div class="otherOptionsContainer">
+        <div class="otherOptionsContainer" v-show="!state.loading">
             <button @click="goToSchedule"> Schedule </button>
             <button @click="goToLearningMap"> Learning Map </button>
             <DashboardStatistics />
@@ -117,6 +117,7 @@ const checkOnboarding = async () =>
             }
 
             state.loading = false;
+            initSession();
         }
     }
     catch (error)
@@ -128,7 +129,58 @@ const checkOnboarding = async () =>
 
 checkOnboarding();
 
+// Initialization just incase APP start does not initialize
+const initSession = async () => 
+{
+  const { data: { session }, error } = await supabase.auth.getSession();
+  
+  if (session)
+  {
+    if (config.debug) console.log("DASHBOARDVIEW: Session is active - ", session);
+    account.status = true;
+    let uuid = session.user.id; 
+    try
+    {
+      const response = await fetch(`/api/users/by-uuid/${uuid}`);
+      const userData = await response.json();
+      
+      if (config.debug) console.log("DASHBOARDVIEW: User data - ", userData);
+      
+      account.name = userData.name;
+      account.uuid = uuid;
+      account.onboardingFinished = userData.onboardingFinished;
+      account.initialDataGenerated = userData.initialDataGenerated;
+    }
+    catch (tryError)
+    {
+      if (config.debug) console.log("DASHBOARDVIEW: " + tryError);
+      const { error } = await supabase.auth.signOut();
 
+      if (error)
+      {
+        if (config.debug) console.log(error);
+      }
+      else 
+      {
+        if (config.debug) console.log("DASHBOARDVIEW: Sign out success");
+        account.status = false;
+        account.name = '';
+      }
+    }
+  
+  }
+  else
+  {
+    if (config.debug) console.log("APP: No active session. Please log in.");
+    account.name = '';
+    account.status = false;
+  }
+
+  if (error)
+  {
+    if (config.debug) console.log(error);
+  }
+}
 
 </script>
 
