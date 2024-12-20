@@ -22,7 +22,7 @@
 
 <script setup>
 import { useAccountStore } from '@/stores/account';
-import { reactive, computed, watchEffect } from "vue";
+import { reactive, computed, watchEffect, defineExpose } from "vue";
 import { useRouter } from 'vue-router';
 
 const account = useAccountStore();
@@ -34,12 +34,29 @@ const studySessionList = reactive({
 
 const getStudySessions = async () =>
 {
+    console.log("NextStudySession::getStudySessions::account.uuid:" + account.uuid);
     const uuid = account.uuid;
     const dbResponse = await fetch(`/api/studySessions/get/${uuid}`);
     const studySessions = await dbResponse.json();
 
     studySessionList.sessions = studySessions;
-    console.log("NEXTSTUDYSESSION:getStudySessions:UUID-" + uuid);
+
+    // Set up reoccuring calls
+    const maxCalls = 3;
+    let currentCalls = 0;
+    const timeout = (time) => new Promise(resolve => setTimeout(resolve, time));
+
+    while (studySessionList.sessions.length <= 0 && currentCalls < maxCalls)
+    {
+        await timeout(2000);
+        const dbResponse = await fetch(`/api/studySessions/get/${uuid}`);
+        const studySessions = await dbResponse.json();
+        studySessionList.sessions = studySessions;
+        currentCalls += 1;
+    }   
+
+    console.log("NextStudySession:getStudySessions:UUID-" + uuid);
+    console.log("NextStudySession:getStudySessions:sessions" + studySessionList.sessions);
 }
 
 const getCurrentDate = () => {
@@ -73,6 +90,9 @@ const goToStartSession = () =>
     router.push("/platform/study");
 }
 
+defineExpose({
+    getStudySessions
+});
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
     <div class="userHomeContainer">
         <Loader v-show="state.loading"/>
-        <NextStudySession v-show="!state.loading"/>
+        <NextStudySession ref="nextStudySessionComponent" v-show="!state.loading"/>
 
         <div class="otherOptionsContainer" v-show="!state.loading">
             <button @click="goToSchedule"> Schedule </button>
@@ -17,13 +17,23 @@ import DashboardStatistics from '@/components/UserPlatform/DashboardStatistics.v
 import Loader from "@/components/Widgets/LoaderAnim.vue"
 import { supabase } from '@/clients/supabase';
 import { useRouter } from 'vue-router'; 
-import { reactive } from "vue"
+import { reactive, ref } from "vue"
 import { config } from "@/config"
 import { useAccountStore } from "@/stores/account";
 
 const state = reactive({
     loading: true
 });
+
+const nextStudySessionComponent = ref(null);
+
+const callGetStudySession = () =>
+{
+    if (nextStudySessionComponent.value)
+    {
+        nextStudySessionComponent.value.getStudySessions();
+    }   
+}
 
 const router = useRouter();
 const account = useAccountStore();
@@ -68,15 +78,20 @@ const checkOnboarding = async () =>
     const sessionResponse = await supabase.auth.getSession();
     let uuid = sessionResponse.data.session.user.id;
     
-    if (config.debug) console.log("DASHBOARD VIEW: Uuid -", uuid);
-    console.log("DASHBOARD VIEW: Store onboarding: " + account.onboardingFinished);
-    console.log("DASHBOARD VIEW: Store initial data: " + account.initialDataGenerated);
+    if (config.debug) 
+    {
+        console.log("DASHBOARD VIEW: Uuid -", uuid);
+        console.log("DASHBOARD VIEW: Store onboarding: " + account.onboardingFinished);
+        console.log("DASHBOARD VIEW: Store initial data: " + account.initialDataGenerated);
+    }
 
     // Check account store to prevent unneccessary DB calls if possible
     if (account.onboardingFinished == true && account.initialDataGenerated == true)
     {
         if (config.debug) console.log("DASHBOARD VIEW: Store shows account is onboarded");
         state.loading = false;
+        callGetStudySession();
+        
         return;
     }
 
@@ -117,6 +132,7 @@ const checkOnboarding = async () =>
             }
 
             state.loading = false;
+            callGetStudySession();
             initSession();
         }
     }
@@ -137,8 +153,10 @@ const initSession = async () =>
   if (session)
   {
     if (config.debug) console.log("DASHBOARDVIEW: Session is active - ", session);
+    
     account.status = true;
     let uuid = session.user.id; 
+    
     try
     {
       const response = await fetch(`/api/users/by-uuid/${uuid}`);

@@ -98,6 +98,7 @@ public class StudySessionService {
                 newStudySession.setCompleted(false);
 
                 studySessionRepository.save(newStudySession);
+                daysOnTracker += 1;
             }
             else
             {
