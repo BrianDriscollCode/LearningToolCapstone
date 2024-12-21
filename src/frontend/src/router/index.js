@@ -60,25 +60,31 @@ history: createWebHistory(process.env.BASE_URL),
         path: '/platform/dashboard',
         name: 'dashboard',
         component: () => import('../views/Platform/DashboardView.vue'),
-            meta: { requiresAuth: true}
+            meta: { requiresAuth: true }
     },
     {
         path: '/platform/schedule',
         name: 'schedule',
         component: () => import('../views/Platform/ScheduleView.vue'),
-            meta: { requiresAuth: true}
+            meta: { requiresAuth: true }
     },
     {
         path: '/platform/learningMap',
         name: 'learningMap',
         component: () => import('../views/Platform/LearningMapView.vue'),
-            meta: { requiresAuth: true}
+            meta: { requiresAuth: true }
     },
     {
         path: '/platform/study',
         name: 'studyView',
         component: () => import('../views/Platform/StudyView.vue'),
-            meta: { requiresAuth: true}
+            meta: { requiresAuth: true }
+    },
+    {
+        path: '/platform/reschedule',
+        name: 'reschedule',
+        component: () => import('../views/Platform/RescheduleView.vue'),
+            meta: { requiresAuth: true }
     }
     ]
 })

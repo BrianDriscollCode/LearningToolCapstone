@@ -1,7 +1,8 @@
 <template>
     <section class="studySessionContainer">
         <h2> Next Study Session </h2>
-        <p v-if="filteredSessions.length <= 0"> Loading... </p> 
+        <p v-if="filteredSessions.length <= 0 && !studySessionList.loaded"> Loading... </p> 
+        <p v-else-if="filteredSessions.length <= 0 && studySessionList.loaded"> No sessions scheduled today... </p>
         <table v-else>
             <tr>
                 <th> Topic </th>
@@ -29,7 +30,8 @@ const account = useAccountStore();
 const router = useRouter();
 
 const studySessionList = reactive({
-    sessions: []
+    sessions: [],
+    loaded: false
 });
 
 const getStudySessions = async () =>
@@ -39,7 +41,8 @@ const getStudySessions = async () =>
     const dbResponse = await fetch(`/api/studySessions/get/${uuid}`);
     const studySessions = await dbResponse.json();
 
-    studySessionList.sessions = studySessions;
+    studySessionList.sessions.splice(0, studySessionList.sessions.length, ...studySessions);
+
 
     // Set up reoccuring calls
     const maxCalls = 3;
@@ -51,9 +54,12 @@ const getStudySessions = async () =>
         await timeout(2000);
         const dbResponse = await fetch(`/api/studySessions/get/${uuid}`);
         const studySessions = await dbResponse.json();
-        studySessionList.sessions = studySessions;
+        studySessionList.sessions.splice(0, studySessionList.sessions.length, ...studySessions);
+
         currentCalls += 1;
     }   
+
+    studySessionList.loaded = true;
 
     console.log("NextStudySession:getStudySessions:UUID-" + uuid);
     console.log("NextStudySession:getStudySessions:sessions" + studySessionList.sessions);
@@ -69,8 +75,13 @@ const filteredSessions = computed(() => {
     const todayDate = getCurrentDate();
     if (Array.isArray(studySessionList.sessions))
     {
+        let start = 0;
+
         return studySessionList.sessions.filter(session => {
             const sessionDate = new Date(session.date).toLocaleDateString('en-CA');
+            console.log(start + ": " + sessionDate)
+            console.log(start + ": " + todayDate)
+            start++;
             return sessionDate === todayDate;
         });
     }
@@ -84,6 +95,13 @@ watchEffect(() => {
     getStudySessions();
   }
 });
+
+
+watchEffect(() => {
+  console.log('Re-evaluating filteredSessions:', filteredSessions.value);
+});
+
+
 
 const goToStartSession = () =>
 {

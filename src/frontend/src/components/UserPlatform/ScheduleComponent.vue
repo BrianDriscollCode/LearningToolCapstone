@@ -2,10 +2,13 @@
     <div>
         <h2> {{ monthName }} </h2>
         <table>
+            <thead>
             <tr>
                 <th> Date </th>
                 <th> Study Sessions </th>
             </tr>
+            </thead>
+            <tbody>
             <tr v-for="day in daysInMonth" :key="day">
                 <td> {{ day }} </td>
                 <td>
@@ -15,6 +18,7 @@
                     </span>
                 </td>
             </tr>
+            </tbody>
         </table>
     </div>
 </template>
