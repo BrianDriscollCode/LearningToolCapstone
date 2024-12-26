@@ -86,14 +86,14 @@ const checkOnboarding = async () =>
     }
 
     // Check account store to prevent unneccessary DB calls if possible
-    if (account.onboardingFinished == true && account.initialDataGenerated == true)
-    {
-        if (config.debug) console.log("DASHBOARD VIEW: Store shows account is onboarded");
-        state.loading = false;
-        callGetStudySession();
+    // if (account.onboardingFinished == true && account.initialDataGenerated == true)
+    // {
+    //     if (config.debug) console.log("DASHBOARD VIEW: Store shows account is onboarded");
+    //     state.loading = false;
+    //     callGetStudySession();
         
-        return;
-    }
+    //     return;
+    // }
 
     // See if user has gone through onboarding process
     try 
@@ -199,6 +199,8 @@ const initSession = async () =>
     if (config.debug) console.log(error);
   }
 }
+
+
 
 </script>
 

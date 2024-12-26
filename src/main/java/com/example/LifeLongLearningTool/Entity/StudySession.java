@@ -29,10 +29,8 @@ public class StudySession {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    public Long getStudySessions()
-    {
-        return studySessionID;
-    }
+    public Long getStudySessionID() { return studySessionID; }
+    public void setStudySessionID(Long studySessionID) { this.studySessionID = studySessionID; }
 
     public User getUserID() { return userID; }
     public void setUserID(User userID) { this.userID = userID; }

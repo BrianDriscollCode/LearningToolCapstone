@@ -81,10 +81,17 @@ history: createWebHistory(process.env.BASE_URL),
             meta: { requiresAuth: true }
     },
     {
-        path: '/platform/reschedule',
+        path: '/platform/reschedule/:id/:name',
         name: 'reschedule',
+        props: true,
         component: () => import('../views/Platform/RescheduleView.vue'),
-            meta: { requiresAuth: true }
+            meta: { requiresAuth: true },
+    },
+    {
+        path: '/platform/learningMap',
+        name: 'learningMap',
+        component: () => import('../views/Platform/LearningMapView.vue'),
+            meta: {requiresAuth: true },
     }
     ]
 })

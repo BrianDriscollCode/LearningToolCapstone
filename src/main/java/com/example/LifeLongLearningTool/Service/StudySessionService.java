@@ -4,11 +4,13 @@ import com.example.LifeLongLearningTool.Dao.StudySessionRepository;
 import com.example.LifeLongLearningTool.Dao.SubjectRepository;
 import com.example.LifeLongLearningTool.Dao.TopicRepository;
 import com.example.LifeLongLearningTool.Dao.UserRepository;
+import com.example.LifeLongLearningTool.Dto.LearningMapDataDTO;
 import com.example.LifeLongLearningTool.Entity.StudySession;
 import com.example.LifeLongLearningTool.Entity.Subject;
 import com.example.LifeLongLearningTool.Entity.Topic;
 import com.example.LifeLongLearningTool.Entity.User;
 import com.example.LifeLongLearningTool.Enum.LearningStatus;
+import com.example.LifeLongLearningTool.Utils.KeyValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
@@ -43,7 +45,47 @@ public class StudySessionService {
         User user = userRepository.findByUuid(uuid);
         List<StudySession> sessions = studySessionRepository.findByUserID(user);
         System.out.println("Sessions: " + sessions);
-        return studySessionRepository.findByUserID(user);
+        return sessions;
+    }
+
+    public void rescheduleDate(Long studySessionID, LocalDate date)
+    {
+        System.out.println(studySessionID + "- studySessionID");
+        StudySession studySession = studySessionRepository.findByStudySessionID(studySessionID);
+
+        studySession.setDate(date);
+        studySessionRepository.save(studySession);
+    }
+
+    public void deleteStudySession(Long studySessionID)
+    {
+        StudySession studySession = studySessionRepository.findByStudySessionID(studySessionID);
+        studySessionRepository.delete(studySession);
+    }
+
+    // Getting the info for subject and <topic, number of sessions>
+    public List<LearningMapDataDTO> getLearningMapInfo(UUID uuid)
+    {
+        User user =  userRepository.findByUuid(uuid);
+        List<Subject> subjects = subjectRepository.findByUserUserID(user.getUserID());
+
+        List<LearningMapDataDTO> learningMapInfoList = new ArrayList<>();
+
+        for (Subject subject : subjects)
+        {
+            List<Topic> topics = topicRepository.findBySubjectSubjectID(subject.getSubjectID());
+
+            List<KeyValuePair<Topic, Integer>> topicSessionPairs = new ArrayList<>();
+            for (Topic topic : topics)
+            {
+                List<StudySession> studySessions = studySessionRepository.findByTopicID(topic);
+                KeyValuePair<Topic, Integer> topicSessionPair = new KeyValuePair<>(topic, studySessions.size());
+                LearningMapDataDTO learningMapObject = new LearningMapDataDTO(subject, topicSessionPair);
+                learningMapInfoList.add(learningMapObject);
+            }
+        }
+
+        return learningMapInfoList;
     }
 
     // generate initial study sessions during onboarding
@@ -77,10 +119,11 @@ public class StudySessionService {
     public void activeStudySessionGenerator(Topic topic)
     {
         LocalDate today = LocalDate.now();
-        int totalDaysInMonth = today.lengthOfMonth();
-        int currentDay = today.getDayOfMonth();
+        //int totalDaysInMonth = today.lengthOfMonth();
+        //int currentDay = today.getDayOfMonth();
 
-        int howManyDays = totalDaysInMonth - currentDay;
+        //int howManyDays = totalDaysInMonth - currentDay;
+        int howManyDays = 14;
 
         int daysOnTracker = 0;
 

@@ -11,10 +11,11 @@
             </tr>
             <tr v-for="(session, index) in filteredSessions" :key="index">
                 <td> {{ session.topicID.name }} </td>
-                <td> {{ new Date(session.date).toLocaleDateString('en-ca') }} </td>
+                <td> {{ getCurrentDate() }} </td>
                 <td> <button @click="goToStartSession"> Start </button> </td>
-                <td> <button> Reschedule </button> </td>
-                <td> <button> Delete </button> </td>
+                <td> <button @click="goToReschedule(session.studySessionID, session.topicID.name)"> Reschedule </button> </td>
+                <td> <button @click="deleteSession(session.studySessionID)"> Delete </button> </td>
+                <td> {{ session }}</td>
             </tr>
         </table>
 
@@ -66,8 +67,12 @@ const getStudySessions = async () =>
 }
 
 const getCurrentDate = () => {
-    const today = new Date();
-    return today.toLocaleDateString('en-CA'); 
+    // const today = new Date();
+    // const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    // const day = today.getDate().toString().padStart(2, '0'); 
+    // const year = today.getFullYear().toString(); 
+    // return `${month}/${day}/${year}`;
+    return new Date().toLocaleDateString('en-US');
 };
 
 // Matching up the sessions that are for the current date
@@ -75,19 +80,45 @@ const filteredSessions = computed(() => {
     const todayDate = getCurrentDate();
     if (Array.isArray(studySessionList.sessions))
     {
-        let start = 0;
+        //let start = 0;
 
         return studySessionList.sessions.filter(session => {
-            const sessionDate = new Date(session.date).toLocaleDateString('en-CA');
-            console.log(start + ": " + sessionDate)
-            console.log(start + ": " + todayDate)
-            start++;
-            return sessionDate === todayDate;
+            //const sessionDate = new Date(session.date).toLocaleDateString('en-US');
+            //console.log(start + ": " + sessionDate)
+            //console.log(start + ": " + todayDate)
+            //start++;
+            const createDateObject = new Date(session.date);
+            createDateObject.setDate(createDateObject.getDate() + 1);
+            const convertedTypeDate = createDateObject.toLocaleDateString('en-US');
+
+            console.log(todayDate + "-todayDate");
+            console.log(convertedTypeDate + "convertedTypeDate")
+            
+            return convertedTypeDate === todayDate;
         });
     }
     return [];
     
 });
+
+const deleteSession = async (id) =>
+{
+    const dbResponse = await fetch(`/api/studySessions/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const res = await dbResponse.text();
+
+    if (res)
+    {
+        getStudySessions();
+    }
+    console.log(res);
+}
+
 
 // Preventing the error from waiting for localStorage to update store
 watchEffect(() => {
@@ -97,15 +128,15 @@ watchEffect(() => {
 });
 
 
-watchEffect(() => {
-  console.log('Re-evaluating filteredSessions:', filteredSessions.value);
-});
-
-
-
 const goToStartSession = () =>
 {
     router.push("/platform/study");
+}
+
+const goToReschedule = (id, name) => 
+{
+    console.log(id, name);
+    router.push(`/platform/reschedule/${id}/${name}`);
 }
 
 defineExpose({

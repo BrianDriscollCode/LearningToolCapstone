@@ -1,6 +1,7 @@
 package com.example.LifeLongLearningTool.Controller;
 
 
+import com.example.LifeLongLearningTool.Dto.LearningMapDataDTO;
 import com.example.LifeLongLearningTool.Entity.StudySession;
 import com.example.LifeLongLearningTool.Entity.Topic;
 import com.example.LifeLongLearningTool.Entity.User;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,5 +50,29 @@ public class StudySessionController {
     {
         studySessionService.generateStudySession(uuid);
         return ResponseEntity.ok("Success");
+    }
+
+    @PostMapping("/reschedule/{studySessionID}/{date}")
+    public ResponseEntity<String> rescheduleStudySessionDate(@PathVariable Long studySessionID, @PathVariable LocalDate date)
+    {
+        System.out.println(studySessionID + " -studySessionID in controller");
+        System.out.println(date + "-localDate in controller");
+        studySessionService.rescheduleDate(studySessionID, date);
+        return ResponseEntity.ok("Success");
+    }
+
+    @DeleteMapping("/delete/{studySessionID}")
+    public ResponseEntity<String> deleteStudySession(@PathVariable Long studySessionID)
+    {
+        System.out.println(studySessionID + " -studySessionID in controller");
+        studySessionService.deleteStudySession(studySessionID);
+        return ResponseEntity.ok("Success");
+    }
+
+    @GetMapping("/learningMapInfo/{uuid}")
+    public List<LearningMapDataDTO> getLearningMapInfo(@PathVariable UUID uuid)
+    {
+        System.out.println("UUID::getLearningMapInfo::" + uuid);
+        return studySessionService.getLearningMapInfo(uuid);
     }
 }

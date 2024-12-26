@@ -23,7 +23,9 @@ const account = useAccountStore();
 // define which container styling to use depending on route (overflow hidden or not)
 const overflowPage = computed(() => 
   route.name === "userHome" || 
-  route.name === "dataPage")
+  route.name === "dataPage" ||
+  route.name === "schedule" ||
+  route.name == "learningMap")
 
 
 // Initialize supabase auth and connect with user account in database

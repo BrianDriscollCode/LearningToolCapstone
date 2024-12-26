@@ -12,7 +12,7 @@
             <tr v-for="day in daysInMonth" :key="day">
                 <td> {{ day }} </td>
                 <td>
-                    <span v-for="(session, index) in getSessionsForDate(day)" :key="session.id"> 
+                    <span v-for="(session, index) in getSessionsForDate(day)" :key="session"> 
                         {{ session.topicID.name }}
                         <span v-if="index < getSessionsForDate(day).length - 1">, </span>
                     </span>
@@ -40,13 +40,21 @@ const getStudySessions = async () =>
     const studySessions = await dbResponse.json();
 
     studySessionList.sessions = studySessions;
+
+    studySessions.forEach(session => {
+        console.log(session.studySessionID, + "- " + session.date);
+    })
 }
 
-const getSessionsForDate = (date) => {
+const getSessionsForDate = (fieldDate) => {
     if (Array.isArray(studySessionList.sessions)) {
         return studySessionList.sessions.filter(session => {
-            const sessionDate = new Date(session.date).toLocaleDateString('en-US');
-            return sessionDate === date;
+            const createDateObject = new Date(session.date);
+            // Adding a day because cannot get en-US to match the day! AGHHHHHH!!
+            createDateObject.setDate(createDateObject.getDate() + 1);
+            const convertedTypeDate = createDateObject.toLocaleDateString('en-US');
+            console.log(convertedTypeDate + " - " + fieldDate);
+            return convertedTypeDate === fieldDate;
         });
     }
     return [];
