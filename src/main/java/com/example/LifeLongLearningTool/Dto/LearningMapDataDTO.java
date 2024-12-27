@@ -11,9 +11,9 @@ import java.util.Map;
 
 public class LearningMapDataDTO {
     private Subject subject;
-    private KeyValuePair<Topic, Integer> numberOfStudySessions;
+    private List<KeyValuePair<Topic, Integer>> numberOfStudySessions;
 
-    public LearningMapDataDTO(Subject subject, KeyValuePair<Topic, Integer> numberOfStudySessions)
+    public LearningMapDataDTO(Subject subject, List<KeyValuePair<Topic, Integer>> numberOfStudySessions)
     {
         this.subject = subject;
         this.numberOfStudySessions = numberOfStudySessions;
@@ -30,8 +30,8 @@ public class LearningMapDataDTO {
     }
 
 
-    public KeyValuePair<Topic, Integer> getNumberOfStudySessions() { return this.numberOfStudySessions; }
+    public List<KeyValuePair<Topic, Integer>> getNumberOfStudySessions() { return this.numberOfStudySessions; }
 
-    public void setNumberOfStudySessions(KeyValuePair<Topic, Integer> numberOfStudySessions) { this.numberOfStudySessions = numberOfStudySessions; }
+    public void setNumberOfStudySessions(List<KeyValuePair<Topic, Integer>> numberOfStudySessions) { this.numberOfStudySessions = numberOfStudySessions; }
 
 }

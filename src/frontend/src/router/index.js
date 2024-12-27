@@ -92,6 +92,13 @@ history: createWebHistory(process.env.BASE_URL),
         name: 'learningMap',
         component: () => import('../views/Platform/LearningMapView.vue'),
             meta: {requiresAuth: true },
+    },
+    {
+        path: '/platform/addingTopic/:name/:subjectID',
+        name: 'addingTopic',
+        props: true,
+        component: () => import('../views/Platform/AddingTopicView.vue'),
+            meta: {requiresAuth: true }
     }
     ]
 })

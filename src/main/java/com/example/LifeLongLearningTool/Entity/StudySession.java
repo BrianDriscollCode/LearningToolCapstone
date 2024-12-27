@@ -10,6 +10,7 @@ import java.util.Date;
 public class StudySession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "study_sessionid")
     private Long studySessionID;
 
     @ManyToOne

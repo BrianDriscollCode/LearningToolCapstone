@@ -15,7 +15,6 @@
                 <td> <button @click="goToStartSession"> Start </button> </td>
                 <td> <button @click="goToReschedule(session.studySessionID, session.topicID.name)"> Reschedule </button> </td>
                 <td> <button @click="deleteSession(session.studySessionID)"> Delete </button> </td>
-                <td> {{ session }}</td>
             </tr>
         </table>
 

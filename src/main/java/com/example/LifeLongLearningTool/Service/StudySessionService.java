@@ -74,15 +74,16 @@ public class StudySessionService {
         for (Subject subject : subjects)
         {
             List<Topic> topics = topicRepository.findBySubjectSubjectID(subject.getSubjectID());
-
             List<KeyValuePair<Topic, Integer>> topicSessionPairs = new ArrayList<>();
             for (Topic topic : topics)
             {
                 List<StudySession> studySessions = studySessionRepository.findByTopicID(topic);
                 KeyValuePair<Topic, Integer> topicSessionPair = new KeyValuePair<>(topic, studySessions.size());
-                LearningMapDataDTO learningMapObject = new LearningMapDataDTO(subject, topicSessionPair);
-                learningMapInfoList.add(learningMapObject);
+                topicSessionPairs.add(topicSessionPair);
             }
+
+            LearningMapDataDTO learningMapObject = new LearningMapDataDTO(subject, topicSessionPairs);
+            learningMapInfoList.add(learningMapObject);
         }
 
         return learningMapInfoList;
@@ -118,6 +119,7 @@ public class StudySessionService {
     // Enum Learning_Status: ACTIVE
     public void activeStudySessionGenerator(Topic topic)
     {
+        //System.out.println(topic);
         LocalDate today = LocalDate.now();
         //int totalDaysInMonth = today.lengthOfMonth();
         //int currentDay = today.getDayOfMonth();
@@ -148,8 +150,6 @@ public class StudySessionService {
                 daysOnTracker = (daysOnTracker + 1) % 4;
             }
         }
-
-
     }
 
 }
