@@ -3,7 +3,7 @@
         <h2>Topic: {{ props.topic.name}}</h2>
 
         <div class="info">
-            <div>
+            <div id="competencyDiv">
                 <span> Competency: </span> 
                 <SELECT :value="props.topic.competency" @change="updateCompetency($event.target.value)">
                     <option value="BEGINNER"> BEGINNER </option>
@@ -67,11 +67,18 @@ const updateLearningStatus = (learningStatus) =>
     justify-content: center;
     flex-direction: column;
     text-align: center;
+    padding-bottom: 1em;
 }
 
 .info
 {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#competencyDiv
+{
+    padding-right: 1em;
 }
 </style>

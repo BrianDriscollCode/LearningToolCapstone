@@ -113,7 +113,7 @@ const goToEditTopic = (topicID) =>
 
 </script>
 
-<style>
+<style scoped>
 .dashBoardLink 
 {
     color: rgb(86, 133, 221);

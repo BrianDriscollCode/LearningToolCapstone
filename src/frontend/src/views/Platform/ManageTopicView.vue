@@ -65,7 +65,7 @@ const goToLearningMap = () =>
     background-color: aqua;
     margin-left: auto;
     margin-right: auto;
-    width: 70%;
+    width: 80%;
 }
 
 </style>
