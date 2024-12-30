@@ -22,6 +22,7 @@ const props = defineProps({
 console.log(props.subjectID, " -subjectID");
 console.log(props.name + " - name");
 
+
 </script>
 
 <style scoped>
@@ -33,13 +34,5 @@ console.log(props.name + " - name");
     align-items: center;
     flex-direction: column;
    
-}
-
-.otherOptionsContainer
-{
-    margin-top: 1em;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
 }
 </style>

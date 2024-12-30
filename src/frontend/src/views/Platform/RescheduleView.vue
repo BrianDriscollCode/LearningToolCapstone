@@ -1,6 +1,5 @@
 <template>
-  <span class="dashBoardLink" @click="goToDashboard"> dashboard </span>
-  <span> / schedule </span> 
+  <span class="dashBoardLink" @click="goToDashboard"> Back to dashboard... </span>
     <section class="rescheduleContainer">
         <div class="rescheduleWrapper">
             <h1> Reschedule </h1>

@@ -1,10 +1,9 @@
 <template>
     <div>
-        <span class="dashBoardLink" @click="goToDashboard"> dashboard </span>
-        <span> / schedule </span> 
+        <span class="dashBoardLink" @click="goToDashboard"> back to dashboard... </span>
         <h1> Learning Map </h1>
 
-        <button> Add Subject </button>
+        <button @click="goToAddingSubject"> Add Subject </button>
 
         <div v-for="(session, index) in learningMapInfo.data" :key="index">
             <table>
@@ -19,7 +18,7 @@
                 <td> {{ pair.key.name}} </td>
                 <td> {{ pair.key.competency }} </td>
                 <td> {{ pair.value }} </td>
-                <td> <button> Edit Topic... </button> </td>
+                <td> <button @click="goToEditTopic(pair.key.topicID)"> Edit Topic... </button> </td>
             </tr>
             <button @click="goToAddingTopic(session.subject.name, session.subject.subjectID)"> Add Topic </button>
             </table>
@@ -42,12 +41,50 @@ const router = useRouter();
 
 const getLearningMapInfo = async () =>
 {
-    const uuid = account.uuid;
-    console.log(uuid);
-    const dbResponse = await fetch(`/api/studySessions/learningMapInfo/${uuid}`);
-    const data = await dbResponse.json();
+    let retryAmount = 0;
+    let maxRetries = 3;
+    const cooldown = 1000;
 
-    learningMapInfo.data = data;
+    // Store updates via APP. If user refreshes, will cause this to take time to be updated, therefore 
+    // using multiple attempts just incase a user hits refresh.
+    while (retryAmount < maxRetries)
+    {
+        try
+        {
+            if (account.uuid)
+            {
+                const uuid = account.uuid;
+                console.log(uuid);
+                const dbResponse = await fetch(`/api/studySessions/learningMapInfo/${uuid}`);
+
+                if (!dbResponse.ok)
+                {
+                    throw new Error("dbResponse error: " + dbResponse.status);
+                }
+                const data = await dbResponse.json();
+                console.log("Learning Map data fetched successfully: ");
+                learningMapInfo.data = data;
+                return;
+            }
+            else
+            {
+                throw new Error("account not loaded");
+            }
+        }
+        catch (error)
+        {
+            retryAmount++;
+            console.log(error);
+
+            if (retryAmount < maxRetries)
+            {
+                console.log("Retrying account store...");
+                await new Promise(resolve => setTimeout(resolve, cooldown));
+            }
+        }
+    
+     
+    }
 
     console.log(learningMapInfo.data);
 } 
@@ -62,6 +99,16 @@ const goToDashboard = () =>
 const goToAddingTopic = (subjectID, name) =>
 {
     router.push(`/platform/addingTopic/${subjectID}/${name}`);
+}
+
+const goToAddingSubject = () =>
+{
+    router.push(`/platform/addingSubject`);   
+}
+
+const goToEditTopic = (topicID) =>
+{
+    router.push(`/platform/manageTopic/${topicID}`);
 }
 
 </script>

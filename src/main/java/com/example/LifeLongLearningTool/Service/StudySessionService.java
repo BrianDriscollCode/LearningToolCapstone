@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -119,13 +120,9 @@ public class StudySessionService {
     // Enum Learning_Status: ACTIVE
     public void activeStudySessionGenerator(Topic topic)
     {
-        //System.out.println(topic);
         LocalDate today = LocalDate.now();
-        //int totalDaysInMonth = today.lengthOfMonth();
-        //int currentDay = today.getDayOfMonth();
 
-        //int howManyDays = totalDaysInMonth - currentDay;
-        int howManyDays = 14;
+        int howManyDays = 31;
 
         int daysOnTracker = 0;
 
@@ -148,6 +145,97 @@ public class StudySessionService {
             else
             {
                 daysOnTracker = (daysOnTracker + 1) % 4;
+            }
+        }
+    }
+
+    // Enum Learning_Status: REVIEW
+    public void reviewStudySessionGenerator(Topic topic)
+    {
+        LocalDate today = LocalDate.now();
+
+        int howManyDays = 31;
+        int daysOnTracker = 0;
+        int daysBetweenSessions = 8;
+
+        for (int i = 0; i < howManyDays; i++) {
+            LocalDate currentDate = today.plusDays(i);
+
+            if (daysOnTracker == 0) {
+                StudySession newStudySession = new StudySession();
+                newStudySession.setUserID(topic.getSubject().getUserID());
+                newStudySession.setDate(currentDate);
+                newStudySession.setMoreStudyRequired(true);
+                newStudySession.setTopicID(topic);
+                newStudySession.setCompleted(false);
+
+                studySessionRepository.save(newStudySession);
+                daysOnTracker += 1;
+            } else if (daysOnTracker == daysBetweenSessions) {
+                daysOnTracker = 0;
+            } else {
+                daysOnTracker += 1;
+            }
+        }
+    }
+
+    // Enum Learning_Status: MAINTAIN
+    public void maintainStudySessionGenerator(Topic topic)
+    {
+        LocalDate today = LocalDate.now();
+
+        int howManyDays = 31;
+        int daysOnTracker = 0;
+        int daysBetweenSessions = 4;
+
+        for (int i = 0; i < howManyDays; i++)
+        {
+            LocalDate currentDate = today.plusDays(i);
+
+            if (daysOnTracker == 3)
+            {
+                StudySession newStudySession = new StudySession();
+                newStudySession.setUserID(topic.getSubject().getUserID());
+                newStudySession.setDate(currentDate);
+                newStudySession.setMoreStudyRequired(true);
+                newStudySession.setTopicID(topic);
+                newStudySession.setCompleted(false);
+
+                studySessionRepository.save(newStudySession);
+                daysOnTracker += 1;
+            }
+            else if (daysOnTracker == daysBetweenSessions)
+            {
+                daysOnTracker = 0;
+            }
+            else
+            {
+                daysOnTracker += 1;
+            }
+        }
+    }
+
+    // Enum Learning_Status: GROWTH
+    public void growthStudySessionGenerator(Topic topic)
+    {
+        LocalDate today = LocalDate.now();
+
+        int howManyDays = 31;
+
+        for (int i = 0; i < howManyDays; i++)
+        {
+            LocalDate currentDate = today.plusDays(i);
+
+            if (currentDate.getDayOfWeek() != DayOfWeek.SUNDAY)
+            {
+                StudySession newStudySession = new StudySession();
+                newStudySession.setUserID(topic.getSubject().getUserID());
+                newStudySession.setDate(currentDate);
+                newStudySession.setMoreStudyRequired(true);
+                newStudySession.setTopicID(topic);
+                newStudySession.setCompleted(false);
+
+                studySessionRepository.save(newStudySession);
             }
         }
     }

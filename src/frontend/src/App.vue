@@ -25,7 +25,8 @@ const overflowPage = computed(() =>
   route.name === "userHome" || 
   route.name === "dataPage" ||
   route.name === "schedule" ||
-  route.name == "learningMap")
+  route.name === "learningMap" ||
+  route.name === "dashboard")
 
 
 // Initialize supabase auth and connect with user account in database
@@ -123,6 +124,7 @@ body
   flex: 1;
   height: 100%;
   overflow: hidden;
+  background-color: rgb(82, 74, 65);
 }
 
 .contentContainer.overflowAllowed

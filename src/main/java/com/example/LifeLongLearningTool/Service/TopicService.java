@@ -34,6 +34,8 @@ public class TopicService {
         return topicRepository.findAll();
     }
 
+    public Topic getTopicWithID(long id) { return topicRepository.findById(id).orElseThrow(); }
+
     public void createTopic(String name, String competency, Long subjectId)
     {
         Subject subject = subjectRepository.findById(subjectId).orElseThrow(() -> new RuntimeException("Could not find Subject with ID: " + subjectId));
@@ -58,6 +60,6 @@ public class TopicService {
         topic.setCompetency(comp);
         topicRepository.save(topic);
 
-        return topic;g
+        return topic;
     }
 }

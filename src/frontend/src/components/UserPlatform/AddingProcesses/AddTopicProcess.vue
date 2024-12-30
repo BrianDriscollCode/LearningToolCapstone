@@ -1,6 +1,7 @@
 <template>
     <div class="welcomeContainer"> 
         <div class="welcomeWrapper">
+            <span class="backLink" @click="goToLearningMap"> Back to LearningMap... </span>
             <p id="welcomeText"> Enter Topic for {{ name.name }}</p>
             <div class="inputSection">
                 <div class="dropDown">
@@ -14,6 +15,7 @@
                     </select>
 
                     <select class="input" v-model="newTopicInput.learning_status">
+                        <option value="Review">Review</option>
                         <option value="Maintain">Maintain</option>
                         <option value="Active">Active</option>
                         <option value="Growth">Growth</option>
@@ -72,11 +74,21 @@ const addTopic = async (id, name, competency, learning_status) => {
     }
 };
 
-
+const goToLearningMap = () => 
+{
+    router.push("/platform/learningMap");
+}
 
 </script>
 
 <style scoped>
+.backLink
+{
+    text-align: left;
+    color: rgb(93, 164, 223);
+    cursor: pointer;
+}
+
 .welcomeContainer
 {
     background-color: rgb(51, 51, 51);

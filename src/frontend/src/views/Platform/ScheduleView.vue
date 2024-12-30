@@ -1,7 +1,6 @@
 <template>
     <div>
-        <span class="dashBoardLink" @click="goToDashboard"> dashboard </span>
-        <span> / schedule </span> 
+        <span class="dashBoardLink" @click="goToDashboard"> back to dashboard... </span>
     </div>
     <ScheduleComponent />
 </template>

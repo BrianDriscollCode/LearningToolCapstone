@@ -12,94 +12,108 @@ import { supabase } from '@/clients/supabase'
 
 const router = createRouter({
 history: createWebHistory(process.env.BASE_URL),
-  routes: [
-    {
-        path: '/',
-        name: 'home',
-        component: HomeView
-    },
-    {
-        path: '/login',
-        name: 'loginPage',
-        component: LoginView
-    },
-    {
-        path: '/signup',
-        name: 'signUpPage',
-        component: SignUpView
-    },
-    
-    {
-        path: '/secrets',
-        name: 'secretPage',
-        component: () => import('../views/SecretView.vue'),
-            meta: { requiresAuth: true }
-    },
-    {
-        path: '/unauthorized',
-        names: 'unauthorizedPage',
-        component: UnauthorizedView
-    },
-    {
-        path: '/data',
-        name: 'dataPage',
-        component: DataView
-    },
-    {
-        path: '/accountmanagerconsole',
-        name: 'accountManagerConsole',
-        component: AccountManagerConsole
-    },
-    {
-        path: '/platform/onboarding',
-        name: 'onboarding',
-        component: () => import('../views/Platform/OnboardingView.vue'),
-            meta: { requiresAuth: true }
-    },
-    {
-        path: '/platform/dashboard',
-        name: 'dashboard',
-        component: () => import('../views/Platform/DashboardView.vue'),
-            meta: { requiresAuth: true }
-    },
-    {
-        path: '/platform/schedule',
-        name: 'schedule',
-        component: () => import('../views/Platform/ScheduleView.vue'),
-            meta: { requiresAuth: true }
-    },
-    {
-        path: '/platform/learningMap',
-        name: 'learningMap',
-        component: () => import('../views/Platform/LearningMapView.vue'),
-            meta: { requiresAuth: true }
-    },
-    {
-        path: '/platform/study',
-        name: 'studyView',
-        component: () => import('../views/Platform/StudyView.vue'),
-            meta: { requiresAuth: true }
-    },
-    {
-        path: '/platform/reschedule/:id/:name',
-        name: 'reschedule',
-        props: true,
-        component: () => import('../views/Platform/RescheduleView.vue'),
-            meta: { requiresAuth: true },
-    },
-    {
-        path: '/platform/learningMap',
-        name: 'learningMap',
-        component: () => import('../views/Platform/LearningMapView.vue'),
-            meta: {requiresAuth: true },
-    },
-    {
-        path: '/platform/addingTopic/:name/:subjectID',
-        name: 'addingTopic',
-        props: true,
-        component: () => import('../views/Platform/AddingTopicView.vue'),
-            meta: {requiresAuth: true }
-    }
+    routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: HomeView
+        },
+        {
+            path: '/login',
+            name: 'loginPage',
+            component: LoginView
+        },
+        {
+            path: '/signup',
+            name: 'signUpPage',
+            component: SignUpView
+        },
+        
+        {
+            path: '/secrets',
+            name: 'secretPage',
+            component: () => import('../views/SecretView.vue'),
+                meta: { requiresAuth: true }
+        },
+        {
+            path: '/unauthorized',
+            names: 'unauthorizedPage',
+            component: UnauthorizedView
+        },
+        {
+            path: '/data',
+            name: 'dataPage',
+            component: DataView
+        },
+        {
+            path: '/accountmanagerconsole',
+            name: 'accountManagerConsole',
+            component: AccountManagerConsole
+        },
+        {
+            path: '/platform/onboarding',
+            name: 'onboarding',
+            component: () => import('../views/Platform/OnboardingView.vue'),
+                meta: { requiresAuth: true }
+        },
+        {
+            path: '/platform/dashboard',
+            name: 'dashboard',
+            component: () => import('../views/Platform/DashboardView.vue'),
+                meta: { requiresAuth: true }
+        },
+        {
+            path: '/platform/schedule',
+            name: 'schedule',
+            component: () => import('../views/Platform/ScheduleView.vue'),
+                meta: { requiresAuth: true }
+        },
+        {
+            path: '/platform/learningMap',
+            name: 'learningMap',
+            component: () => import('../views/Platform/LearningMapView.vue'),
+                meta: { requiresAuth: true }
+        },
+        {
+            path: '/platform/study',
+            name: 'studyView',
+            component: () => import('../views/Platform/StudyView.vue'),
+                meta: { requiresAuth: true }
+        },
+        {
+            path: '/platform/reschedule/:id/:name',
+            name: 'reschedule',
+            props: true,
+            component: () => import('../views/Platform/RescheduleView.vue'),
+                meta: { requiresAuth: true },
+        },
+        {
+            path: '/platform/learningMap',
+            name: 'learningMap',
+            component: () => import('../views/Platform/LearningMapView.vue'),
+                meta: {requiresAuth: true },
+        },
+        {
+            path: '/platform/addingTopic/:name/:subjectID',
+            name: 'addingTopic',
+            props: true,
+            component: () => import('../views/Platform/AddingTopicView.vue'),
+                meta: {requiresAuth: true }
+        },
+        {
+            path: '/platform/addingSubject',
+            name: 'addingSubject',
+            props: true,
+            component: () => import('../views/Platform/AddingSubjectView.vue'),
+                meta: {requiresAuth: true}
+        },
+        {
+            path: '/platform/manageTopic/:topicID',
+            name: 'manageTopic',
+            props: true,
+            component: () => import('../views/Platform/ManageTopicView.vue'),
+                meta: {requiresAuth: true}
+        }
     ]
 })
 

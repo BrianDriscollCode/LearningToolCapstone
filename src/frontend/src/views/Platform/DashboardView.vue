@@ -150,65 +150,63 @@ const initSession = async () =>
 {
   const { data: { session }, error } = await supabase.auth.getSession();
   
-  if (session)
-  {
-    if (config.debug) console.log("DASHBOARDVIEW: Session is active - ", session);
-    
-    account.status = true;
-    let uuid = session.user.id; 
-    
-    try
+    if (session)
     {
-      const response = await fetch(`/api/users/by-uuid/${uuid}`);
-      const userData = await response.json();
-      
-      if (config.debug) console.log("DASHBOARDVIEW: User data - ", userData);
-      
-      account.name = userData.name;
-      account.uuid = uuid;
-      account.onboardingFinished = userData.onboardingFinished;
-      account.initialDataGenerated = userData.initialDataGenerated;
-    }
-    catch (tryError)
-    {
-      if (config.debug) console.log("DASHBOARDVIEW: " + tryError);
-      const { error } = await supabase.auth.signOut();
+        if (config.debug) console.log("DASHBOARDVIEW: Session is active - ", session);
+        
+        account.status = true;
+        let uuid = session.user.id; 
+ 
+        try
+        {
+            const response = await fetch(`/api/users/by-uuid/${uuid}`);
+            const userData = await response.json();
+            
+            if (config.debug) console.log("DASHBOARDVIEW: User data - ", userData);
+            
+            account.name = userData.name;
+            account.uuid = uuid;
+            account.onboardingFinished = userData.onboardingFinished;
+            account.initialDataGenerated = userData.initialDataGenerated;
+        }
+        catch (tryError)
+        {
+            if (config.debug) console.log("DASHBOARDVIEW: " + tryError);
+            const { error } = await supabase.auth.signOut();
 
-      if (error)
-      {
-        if (config.debug) console.log(error);
-      }
-      else 
-      {
-        if (config.debug) console.log("DASHBOARDVIEW: Sign out success");
-        account.status = false;
-        account.name = '';
-      }
-    }
+            if (error)
+            {
+                if (config.debug) console.log(error);
+            }
+            else 
+            {
+                if (config.debug) console.log("DASHBOARDVIEW: Sign out success");
+                account.status = false;
+                account.name = '';
+            }
+        }
+    
+    
   
-  }
-  else
-  {
-    if (config.debug) console.log("APP: No active session. Please log in.");
-    account.name = '';
-    account.status = false;
-  }
+    }
+    else
+    {
+        if (config.debug) console.log("APP: No active session. Please log in.");
+        account.name = '';
+        account.status = false;
+    }
 
-  if (error)
-  {
-    if (config.debug) console.log(error);
-  }
+    if (error)
+    {
+        if (config.debug) console.log(error);
+    }
 }
-
-
-
 </script>
 
 <style scoped>
 .userHomeContainer
 {
     padding-top: 2em;
-    height: 100%;
     background-color: rgb(82, 74, 65);
     display: flex;
     align-items: center;

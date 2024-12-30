@@ -27,6 +27,14 @@ public class TopicController {
         return topicService.getAllTopics();
     }
 
+    @GetMapping("/get/{id}")
+    public Topic getTopic(@PathVariable long id)
+    {
+//        Topic topic =  topicService.getTopicWithID(id);
+//        System.out.println(topic + " - This is topic");
+        return topicService.getTopicWithID(id);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody TopicDTO topicDTO)
     {
@@ -45,7 +53,27 @@ public class TopicController {
 
         Topic topic = topicService.createTopicWithLearningStatus(name, competency, id, learning_status);
         //Eventually generate for different learning_status after creating functions
-        studySessionService.activeStudySessionGenerator(topic);
+
+        if (learning_status.equals("ACTIVE"))
+        {
+            studySessionService.activeStudySessionGenerator(topic);
+        }
+        else if (learning_status.equals("REVIEW"))
+        {
+            studySessionService.reviewStudySessionGenerator(topic);
+        }
+        else if (learning_status.equals("MAINTAIN"))
+        {
+            studySessionService.maintainStudySessionGenerator(topic);
+        }
+        else if (learning_status.equals("GROWTH"))
+        {
+            studySessionService.growthStudySessionGenerator(topic);
+        }
+        else
+        {
+            System.out.println("No match for learning status, no study sessions generated");
+        }
 
         return ResponseEntity.ok("Success");
     }
