@@ -1,28 +1,27 @@
 <template>
-    <span class="dashBoardLink" @click="goToLearningMap"> back to learning map... </span>
-    <section class="topicContainer">
-        <TopicInfoComponent :topic="topicInfo.data" />
-        <hr />
-        <ReferenceMaterialsComponent />
-        <hr />
-        <ReferenceQuestionsComponent />
-    </section>
+    <div>
+        <span class="dashBoardLink" @click="goToLearningMap"> back to learning map... </span>
+        <section class="topicContainer">
+            <TopicInfoComponent :topic="topicInfo.data" />
+            <hr />
+            <ReferenceMaterialsComponent :topicID="topicID" />
+            <hr />
+            <QuestionsComponent />
+        </section>
+    </div>
 
 </template>
 
 <script setup>
 import TopicInfoComponent from '@/components/UserPlatform/ManageTopics/TopicInfoComponent.vue';
 import ReferenceMaterialsComponent from '@/components/UserPlatform/ManageTopics/ReferenceMaterialsComponent.vue';
-import ReferenceQuestionsComponent from '@/components/UserPlatform/ManageTopics/ReferenceQuestionsComponent.vue';
-import { defineProps, onMounted, reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import QuestionsComponent from '@/components/UserPlatform/ManageTopics/QuestionsComponent.vue';
+import { onMounted, reactive } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
-const route = defineProps({
-    topicID: {
-        type: Number,
-        required: true
-    }
-})
+const route = useRoute();
+
+const topicID = Number(route.params.topicID);
 
 const topicInfo = reactive({
     data: {}
@@ -48,7 +47,7 @@ const getTopic = async (topicID) =>
 }
 
 onMounted(() => {
-    getTopic(route.topicID);
+    getTopic(topicID);
 })
 
 const goToLearningMap = () => 

@@ -26,7 +26,8 @@ const overflowPage = computed(() =>
   route.name === "dataPage" ||
   route.name === "schedule" ||
   route.name === "learningMap" ||
-  route.name === "dashboard")
+  route.name === "dashboard" ||
+  route.name === "manageTopic")
 
 
 // Initialize supabase auth and connect with user account in database

@@ -7,17 +7,23 @@
             <tr>
                 <th> Name </th>
                 <th> Location </th>
-                <th> Action </th>
+                <th> Actions </th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td class="tableWrapper"> test </td>
-                <td class="tableWrapper"> test </td>
-                <td id="editBox"> <button id="editButton"> Edit </button> </td>
-            </tr>
-            <AddReferenceRow  v-if="addReference.isTrue"/>
+        <tbody v-for="item in referenceMaterial.material" :key="item.id">
+            <ReferenceRow 
+                :isEdit="addReference.isEdit" 
+                :referenceMaterial="item"
+                :updateTable="getReferenceMaterial"
+                @updateTable="getReferenceMaterial"
+            />
         </tbody>
+        <AddReferenceRow 
+                v-if="addReference.isTrue"
+                :topicID="props.topicID"
+                :updateTable="getReferenceMaterial"
+                @updateTable="getReferenceMaterial"
+            />
     </table>
     </div>
     
@@ -25,11 +31,24 @@
 
 <script setup>
 import AddReferenceRow from './TableRows/AddReferenceRow.vue';
-import { reactive } from "vue";
+import ReferenceRow from './TableRows/ReferenceRow.vue';
+import { reactive, defineProps, watch } from "vue";
 
+// inherited from ManageTopicView to pass to AddReferenceRow
+const props = defineProps({
+    topicID: {
+        type: Number,
+        required: true
+    }
+});
 
 const addReference = reactive({
-    isTrue: false
+    isTrue: false,
+    isEdit: false
+})
+
+const referenceMaterial = reactive({
+    material: []
 })
 
 const toggleAddReference = () =>
@@ -37,11 +56,25 @@ const toggleAddReference = () =>
     addReference.isTrue = !addReference.isTrue;
 }
 
-//fetch request for reference materials
 
-//fetch request for submitting reference materials
+const getReferenceMaterial = async () =>
+{
+    const dbResponse = await fetch(`/api/referenceMaterial/get/${props.topicID}`);
 
+    const res = await dbResponse.json();
 
+    referenceMaterial.material = [...res];
+
+    addReference.isTrue = false;
+    console.log("reference material updated");
+    console.log(referenceMaterial.material);
+}
+
+getReferenceMaterial();
+
+watch(() => referenceMaterial.material, (newVal) => {
+    console.log("Updated referenceMaterial.material:", newVal);
+});
 </script>
 
 <style scoped>
@@ -98,12 +131,6 @@ tr:nth-child(odd) {
 #submitBox 
 {
     border: none;
-}
-
-#editButton
-{
-    width: 100%;
-    padding: 1em;
 }
 
 .tableWrapper

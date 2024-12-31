@@ -1,6 +1,7 @@
 package com.example.LifeLongLearningTool.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +11,8 @@ public class ReferenceMaterial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long referenceID;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name="topicID", nullable = false)
     private Topic topic;
 
