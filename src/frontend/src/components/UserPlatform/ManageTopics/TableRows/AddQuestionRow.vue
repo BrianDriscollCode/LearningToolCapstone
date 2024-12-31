@@ -1,15 +1,44 @@
 <template>
     <tr>
-        <td> 1 </td>
-        <td class="inputField"> <input /> </td>
-        <td class="inputField"> <input /> </td>
-        <td> <button class="editButton"> Submit </button> </td>
+        <td>  </td>
+        <td class="inputField"> <input v-model="fields.question"/> </td>
+        <td class="inputField"> <input v-model="fields.answer"/> </td>
+        <td> <button class="editButton" @click="submitQuestion"> Submit </button> </td>
         <td> <button class="editButton"> AI Generate </button> </td>
     </tr>
 </template>
 
 <script setup>
- 
+import { reactive, defineProps, defineEmits } from "vue";
+
+const props = defineProps({
+    topicID: {
+        type: Number,
+        required: true
+    }
+});
+
+const fields = reactive({
+    question: '',
+    answer: ''
+});
+
+const emit = defineEmits(['updateQuestions']);
+
+const submitQuestion = async () => 
+{
+    const dbResponse = await fetch(`/api/fullQuestion/post/${fields.question}/${fields.answer}/${props.topicID}`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    const res = await dbResponse.text();
+
+    console.log(res, "- submitQuestion response");
+    emit('updateQuestions');
+} 
 
 </script>
 

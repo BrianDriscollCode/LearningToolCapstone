@@ -1,5 +1,9 @@
 package com.example.LifeLongLearningTool.Utils;
 
+//https://stackoverflow.com/questions/2973041/a-keyvaluepair-in-java
+
+// - used this data structure to help solve a problem dealing with transferring hashmaps to the frontend
+
 public class KeyValuePair<K, V> {
     private K key;
     private V value;

@@ -6,7 +6,7 @@
             <hr />
             <ReferenceMaterialsComponent :topicID="topicID" />
             <hr />
-            <QuestionsComponent />
+            <QuestionsComponent :topicID="topicID" />
         </section>
     </div>
 

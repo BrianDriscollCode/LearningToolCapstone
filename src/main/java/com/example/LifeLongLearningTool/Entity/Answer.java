@@ -16,26 +16,21 @@ public class Answer {
     @Column(name = "answer")
     private String answer;
 
-    @Column(name = "is_correct")
-    private Boolean isCorrect;
-
     public Long getAnswerID()
     {
         return answerID;
     }
+    public void setAnswerID(Long answerID) { this.answerID = answerID; }
 
-    public Question getQuestionID()
+    public Question getQuestion()
     {
         return question;
     }
+    public void setQuestion(Question question) { this.question = question; }
 
     public String getAnswer()
     {
         return answer;
     }
-
-    public Boolean getIsCorrect()
-    {
-        return isCorrect;
-    }
+    public void setAnswer(String answer) { this.answer = answer; }
 }

@@ -1,6 +1,7 @@
 package com.example.LifeLongLearningTool.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,33 +11,29 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionID;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="topicID", nullable = false)
-    private Topic topicID;
+    @JsonIgnore
+    private Topic topic;
 
     @Column(name = "question")
     private String question;
-
-    @Column(name = "questionType")
-    private String questionType;
 
     public Long getQuestionID()
     {
         return questionID;
     }
+    public void setQuestionID(Long questionID) { this.questionID = questionID; }
 
-    public Topic getTopicID()
+    public Topic getTopic()
     {
-        return topicID;
+        return topic;
     }
+    public void setTopic(Topic topic) { this.topic = topic; }
 
     public String getQuestion()
     {
         return question;
     }
-
-    public String getQuestionType()
-    {
-        return questionType;
-    }
+    public void setQuestion(String question) { this.question = question; }
 }

@@ -1,35 +1,48 @@
 <template>
-    <h3 id="referenceQuestionsTitle"> Reference Questions </h3>
+    <h3 id="referenceQuestionsTitle"> Review Questions </h3>
     <div class="referenceQuestionsContainer">
-        <button id="addQuestionButton" @click="toggleAddQuestion"> Add Question </button>
+        <button 
+            id="addQuestionButton" 
+            @click="toggleAddQuestion" v-if="!state.addQuestion"> 
+                Add Question 
+        </button>
+        <button 
+            id="addQuestionButton" 
+            @click="toggleAddQuestion" v-else> 
+                Cancel
+        </button>
         <table class="questionTable">
                 <thead>
-                    <th> # </th>
+                    <th class="numberField"> # </th>
                     <th> Question </th>
                     <th> Answer </th>
                     <th> Action </th>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td> 1</td>
-                        <td class="inputField"> <input /> </td>
-                        <td class="inputField"> <input /> </td>
-                        <td> <button class="editButton"> Edit </button> </td>
-                        <td> <button class="editButton"> AI Generate </button> </td>
-                    </tr>
-                    <AddQuestionRow v-if="state.addQuestion"/>
+                <tbody v-for="(item, index) in question.object" :key="index">
+                    <QuestionRow :question="item" :index="index"/>
                 </tbody>
+                <AddQuestionRow 
+                    v-if="state.addQuestion"
+                    :topicID="props.topicID"
+                    :updateQuestions="getQuestions"
+                    @updateQuestions="getQuestions"
+                />
         </table>
     </div>
     
 </template>
 
 <script setup>
+import QuestionRow from './TableRows/QuestionRow.vue';
 import AddQuestionRow from './TableRows/AddQuestionRow.vue';
-import { reactive } from 'vue';
+import { reactive, defineProps, watch } from 'vue';
 
 const state = reactive({
     addQuestion: false
+})
+
+const question = reactive({
+    object: []
 })
 
 const toggleAddQuestion = () =>
@@ -37,11 +50,40 @@ const toggleAddQuestion = () =>
     state.addQuestion = !state.addQuestion;
 }
 
+const props = defineProps({
+    topicID: {
+        type: Number,
+        required: true
+    }
+})
+
+const getQuestions = async () => 
+{
+    const dbResponse = await fetch(`/api/fullQuestion/get/${props.topicID}`);
+    const res = await dbResponse.json();
+
+    console.log(res, "questionsComponent");
+    question.object = [...res];
+    state.addQuestion = false;
+}
+
+getQuestions();
+
+
+watch(() => question.object, (newVal) => {
+    console.log("Updated referenceMaterial.material:", newVal);
+});
+
 </script>
 
 <style scoped>
 input {
     width: 100%;
+}
+
+.numberField
+{
+    width: 10px;
 }
 
 .inputField
