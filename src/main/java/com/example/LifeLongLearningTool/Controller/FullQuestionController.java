@@ -33,6 +33,13 @@ public class FullQuestionController {
         return ResponseEntity.ok("Success");
     }
 
+    @PostMapping("/edit/{questionID}/{question}/{answerID}/{answer}")
+    public ResponseEntity<String> editFullQuestion(@PathVariable Long questionID, @PathVariable String question, @PathVariable Long answerID, @PathVariable String answer)
+    {
+        fullQuestionService.editFullQuestion(questionID, question, answerID, answer);
+        return ResponseEntity.ok("Success");
+    }
+
     @DeleteMapping("/delete/{questionID}/{answerID}")
     public ResponseEntity<String> deleteFullQuestion(@PathVariable Long questionID, @PathVariable Long answerID)
     {

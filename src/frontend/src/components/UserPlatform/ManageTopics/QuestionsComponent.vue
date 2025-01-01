@@ -19,7 +19,14 @@
                     <th> Action </th>
                 </thead>
                 <tbody v-for="(item, index) in question.object" :key="index">
-                    <QuestionRow :question="item" :index="index"/>
+                    <QuestionRow 
+                        :question="item" 
+                        :index="index"
+                        :allQuestions="question"
+                        :title="props.topic.name"
+                        :updateQuestions="getQuestions"
+                        @updateQuestions="getQuestions"
+                    />
                 </tbody>
                 <AddQuestionRow 
                     v-if="state.addQuestion"
@@ -54,6 +61,10 @@ const props = defineProps({
     topicID: {
         type: Number,
         required: true
+    },
+    topic: {
+        type: Object,
+        required: true
     }
 })
 
@@ -62,13 +73,13 @@ const getQuestions = async () =>
     const dbResponse = await fetch(`/api/fullQuestion/get/${props.topicID}`);
     const res = await dbResponse.json();
 
-    console.log(res, "questionsComponent");
-    question.object = [...res];
+    const result = res.sort((a, b) => a.key.questionID - b.key.questionID);
+
+    question.object = [...result];
     state.addQuestion = false;
 }
 
 getQuestions();
-
 
 watch(() => question.object, (newVal) => {
     console.log("Updated referenceMaterial.material:", newVal);

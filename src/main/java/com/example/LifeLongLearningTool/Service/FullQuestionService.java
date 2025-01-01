@@ -55,6 +55,18 @@ public class FullQuestionService {
         answerRepository.save(answerObject);
     }
 
+    public void editFullQuestion(Long questionID, String question, Long answerID, String answer)
+    {
+        Question questionObject = questionRepository.findById(questionID).orElseThrow(() -> new RuntimeException("Could not find with questionID: " + questionID));
+        Answer answerObject = answerRepository.findById(answerID).orElseThrow(() -> new RuntimeException("Could not find answer with answerID: " + answerID));
+
+        questionObject.setQuestion(question);
+        questionRepository.save(questionObject);
+
+        answerObject.setAnswer(answer);
+        answerRepository.save(answerObject);
+    }
+
     public void deleteFullQuestion(Long questionID, Long answerID)
     {
         Question question = questionRepository.findById(questionID).orElseThrow();

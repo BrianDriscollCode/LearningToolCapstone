@@ -4,7 +4,6 @@
         <td class="inputField"> <input v-model="fields.question"/> </td>
         <td class="inputField"> <input v-model="fields.answer"/> </td>
         <td> <button class="editButton" @click="submitQuestion"> Submit </button> </td>
-        <td> <button class="editButton"> AI Generate </button> </td>
     </tr>
 </template>
 

@@ -25,7 +25,7 @@ import { defineProps, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const id = defineProps({
-    studySessionID: Number,
+    studySessionID: String,
     name: String
 })
 
@@ -39,7 +39,12 @@ const router = useRouter();
 const reschedule = async () =>
 {
     const splitDate = selectedDate.value.split('/');
-    const formattedDate = `${splitDate[2]}-${splitDate[0]}-${splitDate[1]}`;
+    const year = splitDate[2];
+    const month = splitDate[0].padStart(2, '0');
+    const day = splitDate[1].padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day}`;
+    console.log(formattedDate);
 
     console.log(id.studySessionID + " -studysessionID");
     console.log(selectedDate.value + " -selectedDate");

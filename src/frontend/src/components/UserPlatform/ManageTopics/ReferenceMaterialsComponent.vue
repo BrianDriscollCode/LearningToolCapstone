@@ -63,7 +63,9 @@ const getReferenceMaterial = async () =>
 
     const res = await dbResponse.json();
 
-    referenceMaterial.material = [...res];
+    const result = res.sort((a, b) => a.referenceID - b.referenceID);
+
+    referenceMaterial.material = [...result];
 
     addReference.isTrue = false;
     console.log("reference material updated");
