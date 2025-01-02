@@ -1,6 +1,9 @@
 <template>
     <div>
-        <span class="dashBoardLink" @click="goToLearningMap"> back to learning map... </span>
+        <div class="linkContainer">
+            <span class="dashBoardLink" @click="goToLearningMap"> back to learning map... </span>
+        </div>
+        
         <section class="topicContainer">
             <TopicInfoComponent :topic="topicInfo.data" />
             <hr />
@@ -58,6 +61,22 @@ const goToLearningMap = () =>
 </script>
 
 <style scoped>
+
+.linkContainer
+{
+    padding: 1em;
+}
+
+.dashBoardLink
+{
+    color: rgb(86, 133, 221);
+}
+
+.dashBoardLink:hover
+{
+    cursor: pointer;
+    color: rgb(245, 159, 1);
+}
 
 .topicContainer 
 {

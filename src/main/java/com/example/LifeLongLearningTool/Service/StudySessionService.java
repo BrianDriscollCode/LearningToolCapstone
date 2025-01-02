@@ -90,6 +90,32 @@ public class StudySessionService {
         return learningMapInfoList;
     }
 
+    public void completeStudySession(long studySessionID)
+    {
+        StudySession studySession = studySessionRepository.findByStudySessionID(studySessionID);
+
+        studySession.setCompleted(true);
+        studySessionRepository.save(studySession);
+    }
+
+    public int getCompletedSessions(UUID uuid)
+    {
+        User user = userRepository.findByUuid(uuid);
+        List<StudySession> numberOfStudySessions = studySessionRepository.findByUserID(user);
+
+
+        List<StudySession> completedSessions = new ArrayList<>();
+        for (StudySession session: numberOfStudySessions)
+        {
+            if (session.getCompleted())
+            {
+                completedSessions.add(session);
+            }
+        }
+
+        return completedSessions.size();
+    }
+
     // generate initial study sessions during onboarding
     public void generateStudySession(UUID uuid)
     {

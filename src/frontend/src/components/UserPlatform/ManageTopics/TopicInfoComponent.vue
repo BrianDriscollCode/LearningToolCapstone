@@ -44,19 +44,35 @@ onMounted(() => {
     topic.competency = props.topic.competency;
 })
 
-const updateCompetency = (competency) =>
+const updateCompetency = async (competency) =>
 {
-    console.log(competency);
+    const dbResponse = await fetch(`/api/topics/changeCompetency/${props.topic.topicID}/${competency}`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    
+    const res = await dbResponse.text();
+
+    console.log(res);
+    //console.log(props.topic.topicID + competency);
 }
 
-const updateLearningStatus = (learningStatus) =>
+const updateLearningStatus = async (learningStatus) =>
 {
-    console.log(learningStatus);
+    const dbResponse = await fetch(`/api/topics/changeLearningStatus/${props.topic.topicID}/${learningStatus}`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+    const res = await dbResponse.text();
+
+    console.log(res);
 }
 
-// fetch request for posting new competency
-
-// fetch request for posting new learning status
 
 </script>
 

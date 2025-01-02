@@ -78,4 +78,18 @@ public class TopicController {
         return ResponseEntity.ok("Success");
     }
 
+    @PostMapping("/changeCompetency/{topicID}/{competency}")
+    public ResponseEntity<String> changeCompetency(@PathVariable Long topicID, @PathVariable String competency)
+    {
+        topicService.changeCompetency(topicID, competency);
+        return ResponseEntity.ok("Success");
+    }
+
+    @PostMapping("/changeLearningStatus/{topicID}/{learningStatus}")
+    public ResponseEntity<String> changeLearningStatus(@PathVariable Long topicID, @PathVariable String learningStatus)
+    {
+        topicService.changeLearningStatus(topicID, learningStatus);
+        return ResponseEntity.ok("Success");
+    }
+
 }

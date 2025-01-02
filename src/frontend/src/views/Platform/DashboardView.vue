@@ -6,7 +6,7 @@
         <div class="otherOptionsContainer" v-show="!state.loading">
             <button @click="goToSchedule"> Schedule </button>
             <button @click="goToLearningMap"> Learning Map </button>
-            <DashboardStatistics />
+            <DashboardStatistics :uuid="state.uuid"/>
         </div>
     </div>
 </template>
@@ -22,7 +22,8 @@ import { config } from "@/config"
 import { useAccountStore } from "@/stores/account";
 
 const state = reactive({
-    loading: true
+    loading: true,
+    uuid: ''
 });
 
 const nextStudySessionComponent = ref(null);
@@ -77,6 +78,7 @@ const checkOnboarding = async () =>
 
     const sessionResponse = await supabase.auth.getSession();
     let uuid = sessionResponse.data.session.user.id;
+    state.uuid = uuid;
     
     if (config.debug) 
     {

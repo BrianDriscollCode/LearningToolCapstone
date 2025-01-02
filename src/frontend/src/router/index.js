@@ -75,8 +75,9 @@ history: createWebHistory(process.env.BASE_URL),
                 meta: { requiresAuth: true }
         },
         {
-            path: '/platform/study',
+            path: '/platform/study/:studySessionID/:topicName',
             name: 'studyView',
+            props: true,
             component: () => import('../views/Platform/StudyView.vue'),
                 meta: { requiresAuth: true }
         },
@@ -91,28 +92,35 @@ history: createWebHistory(process.env.BASE_URL),
             path: '/platform/learningMap',
             name: 'learningMap',
             component: () => import('../views/Platform/LearningMapView.vue'),
-                meta: {requiresAuth: true },
+                meta: { requiresAuth: true },
         },
         {
             path: '/platform/addingTopic/:name/:subjectID',
             name: 'addingTopic',
             props: true,
             component: () => import('../views/Platform/AddingTopicView.vue'),
-                meta: {requiresAuth: true }
+                meta: { requiresAuth: true }
         },
         {
             path: '/platform/addingSubject',
             name: 'addingSubject',
             props: true,
             component: () => import('../views/Platform/AddingSubjectView.vue'),
-                meta: {requiresAuth: true}
+                meta: { requiresAuth: true }
         },
         {
             path: '/platform/manageTopic/:topicID',
             name: 'manageTopic',
             props: true,
             component: () => import('../views/Platform/ManageTopicView.vue'),
-                meta: {requiresAuth: true}
+                meta: { requiresAuth: true }
+        },
+        {
+            path: '/platform/completed/:studySessionID/:topicName',
+            name: 'completedStudySession',
+            props: true,
+            component: () => import('../views/Platform/CompletedStudySession.vue'),
+                meta: { requiresAuth: true }
         }
     ]
 })

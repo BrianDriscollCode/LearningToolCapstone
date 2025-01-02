@@ -70,6 +70,12 @@ const goToLearningMap = () =>
     cursor: pointer;
 }
 
+.learningMapLink:hover
+{
+    cursor: pointer;
+    color: rgb(245, 159, 1);
+}
+
 .welcomeContainer
 {
     background-color: rgb(51, 51, 51);

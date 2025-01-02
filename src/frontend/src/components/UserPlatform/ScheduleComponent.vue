@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="scheduleContainer">
         <h2> {{ monthName }} </h2>
         <table>
             <thead>
@@ -112,5 +112,12 @@ tr:nth-child(even) {
 
 tr:nth-child(odd) {
     background-color: #86fff5;
+}
+
+.scheduleContainer
+{
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 </style>

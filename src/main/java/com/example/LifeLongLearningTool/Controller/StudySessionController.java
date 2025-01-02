@@ -5,6 +5,7 @@ import com.example.LifeLongLearningTool.Dto.LearningMapDataDTO;
 import com.example.LifeLongLearningTool.Entity.StudySession;
 import com.example.LifeLongLearningTool.Entity.Topic;
 import com.example.LifeLongLearningTool.Entity.User;
+import com.example.LifeLongLearningTool.Enum.Competency;
 import com.example.LifeLongLearningTool.Service.StudySessionService;
 import com.example.LifeLongLearningTool.Service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,5 +75,22 @@ public class StudySessionController {
     {
         System.out.println("UUID::getLearningMapInfo::" + uuid);
         return studySessionService.getLearningMapInfo(uuid);
+    }
+
+    @PostMapping("/complete/{studySessionID}")
+    public ResponseEntity<String> completeStudySession(@PathVariable Long studySessionID)
+    {
+        studySessionService.completeStudySession(studySessionID);
+        return ResponseEntity.ok("Success");
+    }
+
+    @GetMapping("/studySessionsCompleted/{uuid}")
+    public int studySessionsCompleted(@PathVariable UUID uuid)
+    {
+        System.out.println("StudySessions Completed - UUID: " + uuid);
+        System.out.println("StudySessions Completed: run");
+        int numberOfCompletedStudySessions = studySessionService.getCompletedSessions(uuid);
+        System.out.println("StudySessions Completed: " + numberOfCompletedStudySessions);
+        return numberOfCompletedStudySessions;
     }
 }

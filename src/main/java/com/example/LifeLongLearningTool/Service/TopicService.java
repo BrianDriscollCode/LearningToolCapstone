@@ -62,4 +62,24 @@ public class TopicService {
 
         return topic;
     }
+
+    public void changeCompetency(Long topicID, String competency)
+    {
+        Competency comp = Competency.valueOf(competency.toUpperCase());
+
+        Topic topic = topicRepository.getReferenceById(topicID);
+        topic.setCompetency(comp);
+
+        topicRepository.save(topic);
+    }
+
+    public void changeLearningStatus(Long topicID, String learningStatus)
+    {
+        LearningStatus learningStatusConverted = LearningStatus.valueOf(learningStatus.toUpperCase());
+
+        Topic topic = topicRepository.getReferenceById(topicID);
+        topic.setLearningStatus(learningStatusConverted);
+
+        topicRepository.save(topic);
+    }
 }

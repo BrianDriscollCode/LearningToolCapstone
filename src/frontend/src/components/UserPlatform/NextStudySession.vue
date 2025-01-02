@@ -10,11 +10,11 @@
                 <th> Actions </th>
             </tr>
             <tr v-for="(session, index) in filteredSessions" :key="index">
-                <td> {{ session.topicID.name }} </td>
-                <td> {{ getCurrentDate() }} </td>
-                <td> <button @click="goToStartSession"> Start </button> </td>
-                <td> <button @click="goToReschedule(session.studySessionID, session.topicID.name)"> Reschedule </button> </td>
-                <td> <button @click="deleteSession(session.studySessionID)"> Delete </button> </td>
+                <td v-if="!session.completed"> {{ session.topicID.name }} </td>
+                <td v-if="!session.completed"> {{ getCurrentDate() }} </td>
+                <td v-if="!session.completed"> <button @click="goToStartSession(session.studySessionID, session.topicID.name)"> Start </button> </td>
+                <td v-if="!session.completed"> <button @click="goToReschedule(session.studySessionID, session.topicID.name)"> Reschedule </button> </td>
+                <td v-if="!session.completed"> <button @click="deleteSession(session.studySessionID)"> Delete </button> </td>
             </tr>
         </table>
 
@@ -36,7 +36,7 @@ const studySessionList = reactive({
 
 const getStudySessions = async () =>
 {
-    console.log("NextStudySession::getStudySessions::account.uuid:" + account.uuid);
+    //console.log("NextStudySession::getStudySessions::account.uuid:" + account.uuid);
     const uuid = account.uuid;
     const dbResponse = await fetch(`/api/studySessions/get/${uuid}`);
     const studySessions = await dbResponse.json();
@@ -61,8 +61,8 @@ const getStudySessions = async () =>
 
     studySessionList.loaded = true;
 
-    console.log("NextStudySession:getStudySessions:UUID-" + uuid);
-    console.log("NextStudySession:getStudySessions:sessions" + studySessionList.sessions);
+    //console.log("NextStudySession:getStudySessions:UUID-" + uuid);
+    //console.log("NextStudySession:getStudySessions:sessions" + studySessionList.sessions);
 }
 
 const getCurrentDate = () => {
@@ -90,8 +90,8 @@ const filteredSessions = computed(() => {
             createDateObject.setDate(createDateObject.getDate() + 1);
             const convertedTypeDate = createDateObject.toLocaleDateString('en-US');
 
-            console.log(todayDate + "-todayDate");
-            console.log(convertedTypeDate + "convertedTypeDate")
+           // console.log(todayDate + "-todayDate");
+            //console.log(convertedTypeDate + "convertedTypeDate")
             
             return convertedTypeDate === todayDate;
         });
@@ -115,7 +115,7 @@ const deleteSession = async (id) =>
     {
         getStudySessions();
     }
-    console.log(res);
+    //console.log(res);
 }
 
 
@@ -127,14 +127,14 @@ watchEffect(() => {
 });
 
 
-const goToStartSession = () =>
+const goToStartSession = (studySessionID, topicName) =>
 {
-    router.push("/platform/study");
+    router.push(`/platform/study/${studySessionID}/${topicName}`);
 }
 
 const goToReschedule = (id, name) => 
 {
-    console.log(id, name);
+    //console.log(id, name);
     router.push(`/platform/reschedule/${id}/${name}`);
 }
 

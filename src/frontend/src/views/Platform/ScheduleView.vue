@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="linkContainer">
         <span class="dashBoardLink" @click="goToDashboard"> back to dashboard... </span>
     </div>
     <ScheduleComponent />
@@ -28,5 +28,10 @@ const goToDashboard = () =>
 {
     cursor: pointer;
     color: rgb(245, 159, 1);
+}
+
+.linkContainer
+{
+    padding: 1em;
 }
 </style>

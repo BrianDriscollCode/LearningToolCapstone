@@ -1,11 +1,17 @@
 <template>
     <div>
-        <span class="dashBoardLink" @click="goToDashboard"> back to dashboard... </span>
-        <h1> Learning Map </h1>
+        <div class="linkContainer">
+            <span class="dashBoardLink" @click="goToDashboard"> back to dashboard... </span>
+        </div>
+        
+        <div class="titleSectionContainer">
+            <h1> Learning Map </h1>
 
-        <button @click="goToAddingSubject"> Add Subject </button>
+            <button class="subjectButton" @click="goToAddingSubject"> Add Subject </button>
+        </div>
+        
 
-        <div v-for="(session, index) in learningMapInfo.data" :key="index">
+        <div v-for="(session, index) in learningMapInfo.data" :key="index" class="tableContainer">
             <table>
             <h2> {{ session.subject.name }}</h2>
             <tr>
@@ -14,13 +20,13 @@
                 <th> Sessions </th>
                 <th> Actions </th>
             </tr>
-            <tr v-for="(pair, index) in session.numberOfStudySessions" :key="index">
-                <td> {{ pair.key.name}} </td>
-                <td> {{ pair.key.competency }} </td>
-                <td> {{ pair.value }} </td>
-                <td> <button @click="goToEditTopic(pair.key.topicID)"> Edit Topic... </button> </td>
+            <tr v-for="(topic, index) in session.numberOfStudySessions" :key="index">
+                <td> {{ topic.key.name}} </td>
+                <td> {{ topic.key.competency }} </td>
+                <td> {{ topic.value }} </td>
+                <td> <button @click="goToEditTopic(topic.key.topicID)"> Edit Topic... </button> </td>
             </tr>
-            <button @click="goToAddingTopic(session.subject.name, session.subject.subjectID)"> Add Topic </button>
+            <button class="topicButton" @click="goToAddingTopic(session.subject.name, session.subject.subjectID)"> Add Topic </button>
             </table>
         </div>
 
@@ -83,7 +89,6 @@ const getLearningMapInfo = async () =>
             }
         }
     
-     
     }
 
     console.log(learningMapInfo.data);
@@ -114,6 +119,16 @@ const goToEditTopic = (topicID) =>
 </script>
 
 <style scoped>
+.titleSectionContainer
+{
+    text-align: center;
+}
+
+.linkContainer
+{
+    padding: 1em;
+}
+
 .dashBoardLink 
 {
     color: rgb(86, 133, 221);
@@ -125,10 +140,18 @@ const goToEditTopic = (topicID) =>
     color: rgb(245, 159, 1);
 }
 
+.tableContainer
+{
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    table-layout:  fixed;
 }
 
 th, td {
@@ -150,5 +173,15 @@ tr:nth-child(odd) {
     background-color: #86fff5;
 }
 
+.subjectButton
+{
+    height: 40px;
+}
+
+.topicButton
+{
+    margin-top: 1em;
+    height: 40px;
+}
 
 </style>

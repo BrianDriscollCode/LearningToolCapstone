@@ -2,15 +2,52 @@
 
     <div class="statisticsContainer">
         <h3> Your Stats: </h3>
-        <p> Hours Studied: 0 </p>
-        <p> Study Sessions completed: 0</p>
-        <p> Competency Improved: 0 </p>
+        <p> Study Sessions completed: {{ sessions.numberCompleted }}</p>
     </div>
 
 </template>
 
 <script setup>
+import { reactive, defineProps, watch } from "vue";
 
+const props = defineProps({
+    uuid: {
+        type: String,
+        required: true
+    }
+})
+
+const sessions = reactive({
+    numberCompleted: 0 
+})
+
+const getSessionsCompleted = async (uuid) =>
+{
+    try 
+    {
+        const dbResponse = await fetch(`/api/studySessions/studySessionsCompleted/${uuid}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        const res = await dbResponse.text();
+        console.log("Dash Statistics: " + uuid);
+
+        console.log("Dash Statistics: " + res);
+
+        sessions.numberCompleted = res;
+    }
+    catch (error)
+    {
+        console.log(error);
+    }
+    
+}
+
+watch(() => props.uuid, (uuid) => {
+    getSessionsCompleted(uuid);
+})
 
 </script>
 
