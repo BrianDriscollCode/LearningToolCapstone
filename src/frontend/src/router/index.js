@@ -121,9 +121,19 @@ history: createWebHistory(process.env.BASE_URL),
             props: true,
             component: () => import('../views/Platform/CompletedStudySession.vue'),
                 meta: { requiresAuth: true }
+        },
+        {
+            path: '/platform/search',
+            name: "search",
+            component: () => import('../views/Platform/SearchView.vue')
         }
     ]
 })
+
+//src: https://www.youtube.com/watch?v=TXaL_S0TDSg
+
+// This is a source created by me on my YouTube channel (called VueReference). It has thousands of views, so 
+// it is a possibility that others have used this same exact structure for authorization
 
 let localUser;
 

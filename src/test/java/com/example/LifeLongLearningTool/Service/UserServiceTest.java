@@ -20,6 +20,9 @@ class UserServiceTest {
     @Autowired
     UserService userService;
 
+    @Autowired
+    UserServiceImpl userServiceImpl;
+
     // Function: getUserByID()
     @Test
     void testGetUserByID_TypeObject()
@@ -65,11 +68,11 @@ class UserServiceTest {
         User user1 = userService.getUserByID(1L);
         String tempName = user1.getName();
 
-        userService.setUserPersonNameByID(1L, "John");
+        userServiceImpl.setUserPersonNameByID(1L, "John");
         User user2 = userService.getUserByID(1L);
         Assertions.assertEquals("John", user2.getName());
 
-        userService.setUserPersonNameByID(1L, tempName);
+        userServiceImpl.setUserPersonNameByID(1L, tempName);
     }
 
     // Function: setUserOnboardingStatus
@@ -91,7 +94,7 @@ class UserServiceTest {
     void testCreateUserDeleteUser()
     {
         UUID uuid = UUID.randomUUID();
-        userService.createUser(uuid, "Jake", "Random07@gmail.com");
+        userServiceImpl.createUser(uuid, "Jake", "Random07@gmail.com");
 
         User user = userService.getUserByUuid(uuid.toString());
         Assertions.assertInstanceOf(User.class, user);

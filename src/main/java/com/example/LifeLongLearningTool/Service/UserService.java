@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UserService {
+public abstract class UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -32,11 +32,10 @@ public class UserService {
         return userRepository.findByUuid(uuidReturnObject);
     }
 
-    public void setUserPersonNameByID(Long id, String name)
+    public void deleteUserWithUUID(UUID uuid)
     {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
-        user.setName(name);
-        userRepository.save(user);
+        User user = userRepository.findByUuid(uuid);
+        userRepository.delete(user);;
     }
 
     public void setUserOnboardingStatus(Long id, Boolean status)
@@ -46,19 +45,4 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void createUser(UUID uuid, String name, String email)
-    {
-        User user = new User();
-        user.setUUID(uuid);
-        user.setName(name);
-        user.setEmail(email);
-        user.setOnboardingFinished(false);
-        userRepository.save(user);
-    }
-
-    public void deleteUserWithUUID(UUID uuid)
-    {
-        User user = userRepository.findByUuid(uuid);
-        userRepository.delete(user);;
-    }
 }

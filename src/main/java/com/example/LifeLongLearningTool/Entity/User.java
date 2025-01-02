@@ -9,22 +9,13 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "Users")
-public class User {
+public class User extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userID;
 
     @Column(name = "Uuid", nullable = false, unique = true)
     private UUID uuid;
-
-    @Column(name = "Name", nullable = false)
-    private String name;
-
-    @Column(name = "Email", nullable = false)
-    private String email;
-
-    @Column(name = "LastLogin")
-    private Date lastLogin;
 
     @Column(name = "OnboardingFinished")
     private Boolean onboardingFinished;
@@ -44,34 +35,6 @@ public class User {
     public void setUUID(UUID uuid)
     {
         this.uuid = uuid;
-    }
-
-    public String getEmail()
-    {
-        return email;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public Date getLastLogin() {
-        return lastLogin;
-    }
-
-    public void setLastLogin(Date lastLogin)
-    {
-        this.lastLogin = lastLogin;
     }
 
     public Boolean getOnboardingFinished()

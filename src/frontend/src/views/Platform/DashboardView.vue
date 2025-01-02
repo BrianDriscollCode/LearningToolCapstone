@@ -6,6 +6,7 @@
         <div class="otherOptionsContainer" v-show="!state.loading">
             <button @click="goToSchedule"> Schedule </button>
             <button @click="goToLearningMap"> Learning Map </button>
+            <button @click="goToSearch"> Search </button>
             <DashboardStatistics :uuid="state.uuid"/>
         </div>
     </div>
@@ -47,6 +48,11 @@ const goToSchedule = () =>
 const goToLearningMap = () =>
 {
     router.push("/platform/learningMap");
+}
+
+const goToSearch = () =>
+{
+    router.push("/platform/search");
 }
 
 // generate the study session data during onboarding
