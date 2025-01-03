@@ -7,7 +7,8 @@ export const useAccountStore = defineStore('account', {
             name: '',
             // Either get item or empty
             uuid: localStorage.getItem('uuid') || '',  
-            initialDataGenerated: false
+            initialDataGenerated: false,
+            isAdmin: false
         }
     },
 
@@ -19,6 +20,7 @@ export const useAccountStore = defineStore('account', {
             this.status = false;
             this.uuid = '';  
             localStorage.removeItem('uuid'); 
+            this.isAdmin = false;
         },
 
         logIn(uuid) {

@@ -29,4 +29,5 @@ public class UserServiceImpl extends UserService {
         user.setOnboardingFinished(false);
         userRepository.save(user);
     }
+
 }

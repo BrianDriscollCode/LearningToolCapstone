@@ -4,7 +4,7 @@
 
     <form @submit.prevent="logout"> 
       <div>
-        <button @click="login"> Logout </button> 
+        <button @click="logout"> Logout </button> 
       </div>
     </form>
   </div> 
@@ -14,15 +14,21 @@
 import { supabase } from '@/clients/supabase';
 import { reactive } from 'vue';
 import { config } from "@/config"
+import { useAccountStore } from '@/stores/account';
 
 let userInfo = reactive({
   email: "",
   password: "",
 });
 
+const account = useAccountStore();
+
 async function logout()
 {
+  account.logOut();
+  account.isAdmin = false;
   const { error } = await supabase.auth.signOut();
+  
 
   if (error)
   {

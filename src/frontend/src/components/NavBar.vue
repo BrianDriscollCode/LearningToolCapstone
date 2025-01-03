@@ -4,7 +4,7 @@
             <RouterLink class="routerLink" to="/"> Home </RouterLink>
             <RouterLink class="routerLink" to="/login"> {{ account.status ? 'Logout' : 'Login'}} </RouterLink>
             <RouterLink class="routerLink" to="/platform/dashboard"> Platform </RouterLink>
-            <!-- <RouterLink class="routerLink" to="/accountManagerConsole"> AccountManagerConsole </RouterLink> -->
+            <RouterLink class="routerLink" to="/accountManagerConsole"> {{ account.isAdmin ? 'accountManagerConsole' : ''}} </RouterLink>
         </div>
 
         <div :class="['accountLinks', { 'hidden': hiddenPage }]">
@@ -30,6 +30,7 @@ const hiddenPage = computed(() =>
     route.name === "generateReport"
 );
 
+//const isAdmin = computed(() => account.isAdmin); 
 
 </script>
 

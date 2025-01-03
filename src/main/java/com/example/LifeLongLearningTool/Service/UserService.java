@@ -1,5 +1,7 @@
 package com.example.LifeLongLearningTool.Service;
 
+import com.example.LifeLongLearningTool.Dao.EmployeeRepository;
+import com.example.LifeLongLearningTool.Entity.Employee;
 import com.example.LifeLongLearningTool.Entity.User;
 import com.example.LifeLongLearningTool.Dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public abstract class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public List<User> getAllUsers()
     {
@@ -36,13 +41,6 @@ public abstract class UserService {
     {
         User user = userRepository.findByUuid(uuid);
         userRepository.delete(user);;
-    }
-
-    public void setUserOnboardingStatus(Long id, Boolean status)
-    {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User Not found with ID: " + id));
-        user.setOnboardingFinished(status);
-        userRepository.save(user);
     }
 
 }

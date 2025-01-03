@@ -75,6 +75,11 @@ public class OnboardingService {
         System.out.println("ONBOARDING SERVICE::REPO SAVED");
     }
 
-
+    public void setUserOnboardingStatus(Long id, Boolean status)
+    {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User Not found with ID: " + id));
+        user.setOnboardingFinished(status);
+        userRepository.save(user);
+    }
 
 }

@@ -25,7 +25,7 @@
 
           <p v-if="validation.emailError" class="error"> Wrong email or password... </p> 
           <!-- Leaving sign up off because would require different license for supabase to have unknown accounts to signup -->
-          <!-- <p> Don't have an account? <RouterLink to="/signup"> Sign up </RouterLink> </p> -->
+          <p> Don't have an account? <RouterLink to="/signup"> Sign up </RouterLink> </p>
           
         </div>
         
@@ -97,6 +97,16 @@ async function login()
         account.name = userData.name;
         account.uuid = uuid;
 
+        if (userData.employee)
+        {
+            account.isAdmin = userData.employee.is_Admin;
+        }
+        else
+        {
+            account.isAdmin = false;
+        }
+        
+
         router.push('/platform/dashboard');
       }
       catch (error)
@@ -110,7 +120,9 @@ async function login()
 
 const logout = async () =>
 {
+
   const { error } = await supabase.auth.signOut();
+  account.logOut();
 
   if (error)
   {
@@ -121,6 +133,7 @@ const logout = async () =>
     console.log("Sign out success");
     account.status = false;
     account.name = '';
+    account.isAdmin = false;
   }
 }
 

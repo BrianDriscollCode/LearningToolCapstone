@@ -2,6 +2,7 @@ package com.example.LifeLongLearningTool.Controller;
 
 import com.example.LifeLongLearningTool.Dto.UserDTO;
 import com.example.LifeLongLearningTool.Entity.User;
+import com.example.LifeLongLearningTool.Service.OnboardingService;
 import com.example.LifeLongLearningTool.Service.UserService;
 import com.example.LifeLongLearningTool.Service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,12 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private OnboardingService onboardingService;
 
     @GetMapping
     public List<User> getAllUsers()
@@ -40,7 +47,7 @@ public class UserController {
     @GetMapping("/{id}/{status}")
     public void setUserOnboardingStatus(@PathVariable Long id, @PathVariable Boolean status)
     {
-        userServiceImpl.setUserOnboardingStatus(id, status);
+        onboardingService.setUserOnboardingStatus(id, status);
         System.out.println("SET USER ONBOARDING STATUS");
     }
 

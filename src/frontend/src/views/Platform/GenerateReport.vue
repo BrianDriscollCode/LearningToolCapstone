@@ -28,7 +28,7 @@
             </tbody>
         </Table>
         <div id="buttonContainer">
-            <button @click="generateReport" id="generateButton"> Generate Report </button>
+            <button @click="generateReport" id="generateButton"> Print/Save Report </button>
         </div>
     </section>
 </template>

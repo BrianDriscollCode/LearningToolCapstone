@@ -182,6 +182,14 @@ const initSession = async () =>
             account.uuid = uuid;
             account.onboardingFinished = userData.onboardingFinished;
             account.initialDataGenerated = userData.initialDataGenerated;
+            if (userData.employee)
+            {
+                account.isAdmin = userData.employee.is_Admin;
+            }
+            else
+            {
+                account.isAdmin = false;
+            }
         }
         catch (tryError)
         {

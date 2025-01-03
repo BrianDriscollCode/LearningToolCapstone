@@ -13,7 +13,6 @@
         
         <div class="formInnerWrapper">
 
-          <button id="googleSignInButton"> Sign up with Google </button>
           <div class="orSpacing">
             <hr />
           </div>
