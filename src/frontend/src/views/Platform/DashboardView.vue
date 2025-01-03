@@ -7,6 +7,7 @@
             <button @click="goToSchedule"> Schedule </button>
             <button @click="goToLearningMap"> Learning Map </button>
             <button @click="goToSearch"> Search </button>
+            <button @click="goToGenerateReport"> Generate Report </button>
             <DashboardStatistics :uuid="state.uuid"/>
         </div>
     </div>
@@ -53,6 +54,11 @@ const goToLearningMap = () =>
 const goToSearch = () =>
 {
     router.push("/platform/search");
+}
+
+const goToGenerateReport = () =>
+{
+    router.push("/platform/generateReport");
 }
 
 // generate the study session data during onboarding

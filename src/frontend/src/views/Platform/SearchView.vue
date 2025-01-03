@@ -3,7 +3,7 @@
         <span class="dashBoardLink" @click="goToDashboard"> back to dashboard... </span>
     </div>
     <div id="searchContainer">
-        <h1> Search </h1>
+        <h1> Search Sessions By Topic </h1>
         <input v-model="search.input" id="inputSearch" /> 
         <button @click="startSearch" id="buttonSearch"> Search Study Topic </button>
     </div>

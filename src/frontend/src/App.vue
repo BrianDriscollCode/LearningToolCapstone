@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import NavBar from "@/components/DebugNav.vue";
+import NavBar from "@/components/NavBar.vue";
 import { computed } from "vue";
 import { RouterView, useRoute } from 'vue-router';
 import { supabase } from "./clients/supabase";
@@ -28,7 +28,8 @@ const overflowPage = computed(() =>
   route.name === "learningMap" ||
   route.name === "dashboard" ||
   route.name === "manageTopic" ||
-  route.name === "search"
+  route.name === "search" ||
+  route.name === "generateReport"
 )
 
 

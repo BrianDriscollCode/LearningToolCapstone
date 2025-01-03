@@ -126,6 +126,12 @@ history: createWebHistory(process.env.BASE_URL),
             path: '/platform/search',
             name: "search",
             component: () => import('../views/Platform/SearchView.vue')
+        },
+        {
+            path: '/platform/generateReport',
+            name: 'generateReport',
+            component: () => import('../views/Platform/GenerateReport.vue'),
+                meta: { requiresAuth: true }
         }
     ]
 })
