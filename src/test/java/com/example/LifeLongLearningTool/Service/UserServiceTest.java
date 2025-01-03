@@ -69,10 +69,10 @@ class UserServiceTest {
         String tempName = user1.getName();
 
         userServiceImpl.setUserPersonNameByID(1L, "John");
-        User user2 = userService.getUserByID(1L);
-        Assertions.assertEquals("John", user2.getName());
+        Assertions.assertEquals("John", user1.getName());
 
         userServiceImpl.setUserPersonNameByID(1L, tempName);
+        Assertions.assertEquals(tempName, user1.getName());
     }
 
     // Function: setUserOnboardingStatus

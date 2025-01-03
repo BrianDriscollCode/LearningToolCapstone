@@ -98,11 +98,6 @@ watch(() => referenceMaterial.material, (newVal) => {
     margin-bottom: 1em;
 }
 
-.referenceTable
-{
-    
-}
-
 
 table {
     width: 100%;

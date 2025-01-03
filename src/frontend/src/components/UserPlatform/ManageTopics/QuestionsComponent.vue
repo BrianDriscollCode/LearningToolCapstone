@@ -97,11 +97,6 @@ input {
     width: 10px;
 }
 
-.inputField
-{
-    
-}
-
 #referenceQuestionsTitle
 {
     text-align: center;

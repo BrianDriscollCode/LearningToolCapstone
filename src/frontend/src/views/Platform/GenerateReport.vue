@@ -176,7 +176,7 @@ th, td {
 }
 
 th {
-    background-color: #fab22b;
+    background-color: #E56B6F;
     color: rgb(46, 46, 46);
 }
 
@@ -185,7 +185,7 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(odd) {
-    background-color: #86fff5;
+    background-color: #6eddd4;
 }
 
 #buttonContainer

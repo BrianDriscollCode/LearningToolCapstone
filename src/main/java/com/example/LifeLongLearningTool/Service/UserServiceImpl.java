@@ -10,6 +10,8 @@ import java.util.UUID;
 
 @Service
 public class UserServiceImpl extends UserService {
+
+    @Autowired
     private UserRepository userRepository;
 
     public void setUserPersonNameByID(Long id, String name) {
