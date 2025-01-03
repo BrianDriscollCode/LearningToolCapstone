@@ -6,23 +6,53 @@
                 <input class="input" placeholder="First Subject" type="text" v-model="subject" />
                 <button 
                     id="getStartedButton"
-                     @click="$emit('fillSubjects', subject)"
+                     @click="submitSubject"
                     > Next 
                 </button>
+                <p v-if="validation.fillError" id="error"> You must fill in the field </p>
+                <p v-if="validation.lengthError" id="error"> Max 25 characters </p>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive, defineEmits } from "vue";
 
 let subject = ref("");
 
+const validation = reactive({
+    fillError: false,
+    lengthError: false
+})
+
+const emit = defineEmits(['fillSubjects']);
+
+const submitSubject = () =>
+{
+    if (subject.value.length > 25)
+    {
+        validation.lengthError = true;
+    }
+    else if (subject.value.length < 1)
+    {
+        validation.fillError = true;
+    }
+    else
+    {
+        validation.error = false;
+        emit("fillSubjects", subject);
+    }
+}
 
 </script>
 
 <style scoped>
+
+#error 
+{
+    color: red;
+}
 
 .welcomeContainer
 {

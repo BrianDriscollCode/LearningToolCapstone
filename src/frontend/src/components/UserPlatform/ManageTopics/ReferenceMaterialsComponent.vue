@@ -118,7 +118,7 @@ th, td {
 }
 
 th {
-    background-color: #fab22b;
+    background-color: #E56B6F;
     color: rgb(46, 46, 46);
 }
 

@@ -6,15 +6,14 @@
         <img id="logo" :src="logo" width="100" height="100"/>
       </div>
       
-      <h2 id="loginTitle"> Sign in to SerialStudier </h2>
+      <h2 id="loginTitle" v-if="!account.status"> Sign in to SerialStudier </h2>
+      <h2 id="loginTitle" v-if="account.status"> Logout of SerialStudier </h2>
 
         
 
-      <form @submit.prevent="login">
+      <form @submit.prevent="login" v-if="!account.status">
         
         <div class="formInnerWrapper">
-
-          <button id="googleSignInButton"> Sign in with Google </button>
           <div class="orSpacing">
             <hr />
           </div>
@@ -24,7 +23,20 @@
           <input id="passwordInput" type="password" placeholder="Password" v-model="userInfo.password" /> 
           <button id="loginButton" @click="login"> Login </button> 
 
-          <p> Don't have an account? <RouterLink to="/signup"> Sign up </RouterLink> </p>
+          <p v-if="validation.emailError" class="error"> Wrong email or password... </p> 
+          <!-- Leaving sign up off because would require different license for supabase to have unknown accounts to signup -->
+          <!-- <p> Don't have an account? <RouterLink to="/signup"> Sign up </RouterLink> </p> -->
+          
+        </div>
+        
+      </form>
+
+      <form @submit.prevent="logout" v-if="account.status">
+        
+        <div class="formInnerWrapper">
+        
+          <button id="loginButton" @click="logout"> Logout </button> 
+
           
         </div>
         
@@ -38,7 +50,7 @@ import { supabase } from '@/clients/supabase';
 import { reactive } from 'vue';
 import { useRouter } from "vue-router";
 import { useAccountStore } from '@/stores/account';
-import { RouterLink } from 'vue-router';
+//import { RouterLink } from 'vue-router';
 import { config } from "@/config"
 import logo from '@/assets/mindMapPngTree.png';
 import xPNG from "@/assets/exitFlaticon.png";
@@ -47,6 +59,11 @@ let userInfo = reactive({
   email: "bdriscoll407@gmail.com",
   password: "Imcool123!",
 });
+
+const validation = reactive({
+  emailError: false,
+  fillError: false
+})
 
 const router = useRouter();
 const account = useAccountStore();
@@ -60,11 +77,13 @@ async function login()
   if (error)
   {
     if (config.debug) console.log(error);
+    validation.emailError = true;
   }
   else
   {
     if (data.user)
     {
+      validation.emailError = false;
       // updates pinia store
       account.status = true;
       let uuid = data.user.id;
@@ -89,6 +108,22 @@ async function login()
   }
 }
 
+const logout = async () =>
+{
+  const { error } = await supabase.auth.signOut();
+
+  if (error)
+  {
+    console.log(error);
+  }
+  else 
+  {
+    console.log("Sign out success");
+    account.status = false;
+    account.name = '';
+  }
+}
+
 async function exit()
 {
   router.push('/')
@@ -97,7 +132,11 @@ async function exit()
 </script>
 
 <style scoped>
+.error
+{
 
+  color: red;
+}
 
 .formContainer 
 {

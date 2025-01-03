@@ -25,6 +25,8 @@
                 <button @click="addTopic(name.id, newTopicInput.name, newTopicInput.competency, newTopicInput.learning_status)">
                     Submit
                 </button>
+                <p v-if="validation.fillError" class="error"> You must fill all fields </p>
+                <p v-if="validation.lengthError" class="error"> Max 25 characters per field </p>
             </div>
         </div>
     </div>
@@ -54,7 +56,35 @@ const newTopicInput = reactive({
     name: ""
 })
 
+const validation = reactive({
+    lengthError: false,
+    fillError: false
+})
+
 const addTopic = async (id, name, competency, learning_status) => {
+    if (id.length < 1 || name.length < 1 || competency < 1 || learning_status < 1)
+    {   
+        validation.fillError = true;
+        return;
+    }
+    else
+    {
+        validation.fillError = false;
+    }
+    
+    if (id.length > 25 || name.length > 25 || competency > 25 || learning_status > 25)
+    {
+        validation.lengthError = true;
+        return;
+    }
+    else
+    {
+        validation.lengthError = false;
+    }
+
+    validation.lengthError = false;
+    validation.fillError = false;
+
     const comp = competency.toUpperCase();
     const learn = learning_status.toUpperCase();
 
@@ -82,6 +112,11 @@ const goToLearningMap = () =>
 </script>
 
 <style scoped>
+.error
+{
+    color: red;
+}
+
 .backLink
 {
     text-align: left;

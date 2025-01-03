@@ -221,7 +221,7 @@ const initSession = async () =>
 .userHomeContainer
 {
     padding-top: 2em;
-    background-color: rgb(82, 74, 65);
+    background-color: #6D597A;
     display: flex;
     align-items: center;
     flex-direction: column;

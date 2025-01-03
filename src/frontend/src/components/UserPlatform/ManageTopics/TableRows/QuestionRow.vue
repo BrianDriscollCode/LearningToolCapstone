@@ -5,11 +5,13 @@
         <td class="inputField" v-else-if="state.edit == aiGenerationState.LOADING"> Loading... </td>
         <td class="inputField" v-else-if="state.edit == aiGenerationState.INPUT">
             <textarea v-model="fields.question" class="textArea"> </textarea> 
+            <p v-if="validation.fillError" class="error"> Cannot be empty </p>
         </td>
         <td class="inputField" v-if="state.edit == aiGenerationState.OFFLINE || state.edit == aiGenerationState.FINISHED"> {{ props.question.value.answer }} </td>
         <td class="inputField" v-else-if="state.edit == aiGenerationState.LOADING"> Loading... </td>
         <td class="inputField" v-else-if="state.edit == aiGenerationState.INPUT">
             <textarea v-model="fields.answer" class="textArea"> </textarea> 
+            <p v-if="validation.fillError" class="error"> Cannot be empty </p>
         </td>
         <td v-if="!state.edit"> <button class="editButton" @click="toggleEdit"> Edit </button> </td>
         <td v-else> 
@@ -67,6 +69,10 @@ const fields = reactive({
     history: []
 })
 
+const validation = reactive({
+    fillError: false
+})
+
 // updating question history to generate unique responses
 const updateInitialHistory = () =>
 {
@@ -90,6 +96,16 @@ const toggleEdit = () =>
 
 const editRow = async () =>
 {
+    if (fields.question.length < 1 || fields.answer.length < 1)
+    {
+        validation.fillError = true;
+        return;
+    }
+    else
+    {
+        validation.fillError = false;
+    }
+
     const answer = encodeURIComponent(fields.answer);
     const question = encodeURIComponent(fields.question);
 
@@ -189,7 +205,10 @@ const getAIAnswer = async (question) =>
 </script>
 
 <style scoped>
-
+.error
+{
+    color: red;
+}
 
 input 
 {
@@ -212,7 +231,7 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(odd) {
-    background-color: #86fff5;
+    background-color: #6eddd4;
 }
 
 .editButton

@@ -6,6 +6,7 @@
         <h1> Search Sessions By Topic </h1>
         <input v-model="search.input" id="inputSearch" /> 
         <button @click="startSearch" id="buttonSearch"> Search Study Topic </button>
+        <p v-if="validation.fillError" id="error"> You must provide input </p>
     </div>
 
     <table id="searchTable">
@@ -41,6 +42,10 @@ const search = reactive({
     topicInfo: []
 });
 
+const validation = reactive({
+    fillError: false
+})
+
 const account = useAccountStore();
 
 const router = useRouter();
@@ -71,6 +76,16 @@ getStudySessionInfo();
 
 const startSearch = () =>
 {
+    if (search.input.length < 1)
+    {
+        validation.fillError = true;
+        return;
+    }
+    else
+    {
+        validation.fillError = false;
+    }
+
     search.enteredInput = search.input;
 }
 
@@ -88,6 +103,11 @@ const searchFilter = computed(() => {
 </script>
 
 <style scoped>
+#error
+{
+    color: red;
+}
+
 .linkContainer
 {
     padding: 1em;
@@ -106,7 +126,7 @@ h1
 
 #searchContainer
 {
-    background-color: aquamarine;
+    background-color: #cefff4;
     width: 400px;
     text-align: center;
     padding: 1em;
@@ -148,7 +168,7 @@ th, td {
 }
 
 th {
-    background-color: #fab22b;
+    background-color: #E56B6F;
     color: rgb(46, 46, 46);
 }
 
@@ -157,6 +177,6 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(odd) {
-    background-color: #86fff5;
+    background-color: #6eddd4;
 }
 </style>

@@ -2,13 +2,14 @@
     <nav :class="['nav', { 'hidden': hiddenPage }]">
         <div class="links">
             <RouterLink class="routerLink" to="/"> Home </RouterLink>
-            <RouterLink class="routerLink" to="/login"> Login </RouterLink>
-            <RouterLink class="routerLink" to="/accountManagerConsole"> AccountManagerConsole </RouterLink>
+            <RouterLink class="routerLink" to="/login"> {{ account.status ? 'Logout' : 'Login'}} </RouterLink>
+            <RouterLink class="routerLink" to="/platform/dashboard"> Platform </RouterLink>
+            <!-- <RouterLink class="routerLink" to="/accountManagerConsole"> AccountManagerConsole </RouterLink> -->
         </div>
 
         <div :class="['accountLinks', { 'hidden': hiddenPage }]">
             <span v-show="logStatus"> {{ account.name }} </span>
-            <span v-show="!logStatus"> Log in </span>
+            <!-- <span v-show="!logStatus"> Log in </span> -->
         </div>
     </nav>
 </template>
@@ -35,7 +36,7 @@ const hiddenPage = computed(() =>
 <style scoped>
 .nav
 {
-    background-color: rgb(122, 120, 118);
+    background-color: #EAAC8B;
     width: 100%;
     height: 60px;
 
@@ -73,6 +74,13 @@ const hiddenPage = computed(() =>
 
 .routerLink
 {
-padding-right: 1em;
+    color: #355070;
+    padding-right: 1em;
+    text-decoration: none;
 }
+
+.routerLink:hover{
+    color: #E56B6F
+}
+
 </style>

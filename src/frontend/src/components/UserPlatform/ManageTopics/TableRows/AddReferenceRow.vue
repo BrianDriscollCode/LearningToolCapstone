@@ -1,7 +1,7 @@
 <template>
     <tr>
-        <td class="tableWrapper"> <input class="referenceInput" v-model="reference.name" /> </td> <!-- Name -->
-        <td class="tableWrapper"> <input class="referenceInput" v-model="reference.location" /> </td> <!-- Location -->
+        <td class="tableWrapper"> <input class="referenceInput" v-model="reference.name" /> <p v-if="validation.fillError" class="error"> Cannot be empty </p> </td>
+        <td class="tableWrapper"> <input class="referenceInput" v-model="reference.location" /> <p v-if="validation.fillError" class="error"> Cannot be empty </p> </td>
         <td id="submitBox"> <button id="submitButton" @click="submitReference"> submit </button> </td>
     </tr>
 
@@ -15,6 +15,10 @@ const reference = reactive({
     location: ''
 })
 
+const validation = reactive({
+    fillError: false
+})
+
 const props = defineProps({
     topicID: {
         type: Number,
@@ -26,6 +30,16 @@ const emit = defineEmits('updateTable');
 
 const submitReference = async () => 
 {
+    if (reference.name.length < 1 || reference.location.length < 1)
+    {
+        validation.fillError = true;
+        return;
+    }
+    else
+    {
+        validation.fillError = false;
+    }
+
     const dbResponse = await fetch("/api/referenceMaterial/post", {
         method: "POST",
         headers: {
@@ -46,6 +60,11 @@ const submitReference = async () =>
 </script>
 
 <style scoped>
+.error
+{
+    color: red;
+}
+
 #submitBox 
 {
     border: none;

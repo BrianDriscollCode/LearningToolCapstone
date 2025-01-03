@@ -80,7 +80,7 @@ const goToLearningMap = () =>
 
 .topicContainer 
 {
-    background-color: aqua;
+    background-color: #cefff4;
     margin-left: auto;
     margin-right: auto;
     width: 80%;

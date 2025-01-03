@@ -1,5 +1,8 @@
 <template>
-  <span class="dashBoardLink" @click="goToDashboard"> Back to dashboard... </span>
+  <div id="linkContainer">
+    <span class="dashBoardLink" @click="goToDashboard"> Back to dashboard... </span>
+  </div>
+  
     <section class="rescheduleContainer">
         <div class="rescheduleWrapper">
             <h1> Reschedule </h1>
@@ -34,6 +37,11 @@ const goToDashboard = () =>
 </script>
 
 <style scoped>
+#linkContainer 
+{
+  padding: 1em;
+}
+
 .rescheduleContainer
 {
     display: flex;

@@ -119,6 +119,16 @@ const goToEditTopic = (topicID) =>
 </script>
 
 <style scoped>
+h1
+{
+    color: white;
+}
+
+h2
+{
+    color: white;
+}
+
 .titleSectionContainer
 {
     text-align: center;
@@ -161,7 +171,7 @@ th, td {
 }
 
 th {
-    background-color: #fab22b;
+    background-color: #E56B6F;
     color: rgb(46, 46, 46);
 }
 
@@ -170,7 +180,7 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(odd) {
-    background-color: #86fff5;
+    background-color: #6eddd4;
 }
 
 .subjectButton

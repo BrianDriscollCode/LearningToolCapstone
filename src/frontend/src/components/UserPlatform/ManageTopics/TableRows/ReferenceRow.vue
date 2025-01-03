@@ -1,10 +1,11 @@
 <template>
     <tr>
         <td class="tableWrapper" v-if="!state.isEdit"> {{ fields.name }}</td>
-        <td class="tableWrapper" v-else> <input v-model="fields.name"/> </td>
+        <td class="tableWrapper" v-else> <input v-model="fields.name"/> <p v-if="validation.fillError" class="error"> Cannot be empty </p> </td>
+        
         
         <td class="tableWrapper" v-if="!state.isEdit"> {{ fields.location }}</td>
-        <td class="tableWrapper" v-else> <input v-model="fields.location"/> </td>
+        <td class="tableWrapper" v-else> <input v-model="fields.location"/> <p v-if="validation.fillError" class="error"> Cannot be empty </p> </td>
 
         <td id="editBox" v-if="!state.isEdit"> 
             <button id="editButton" @click="toggleIsEdit()"> Edit </button> 
@@ -38,6 +39,10 @@ const fields = reactive({
     location: props.referenceMaterial.location,
 });
 
+const validation = reactive({
+    fillError: false
+})
+
 const toggleIsEdit = () =>
 {
     state.isEdit = !state.isEdit;
@@ -45,6 +50,16 @@ const toggleIsEdit = () =>
 
 const submitReferenceEdit = async () =>
 {
+    if (fields.name.length < 1 || fields.location.length < 1)
+    {
+        validation.fillError = true;
+        return;
+    }
+    else
+    {
+        validation.fillError = false;
+    }
+
     const dbResponse = await fetch(`/api/referenceMaterial/edit/${props.referenceMaterial.referenceID}/${fields.name}/${fields.location}`, {
         method: 'POST',
         headers: {
@@ -87,6 +102,11 @@ watchEffect(() => {
 </script>
 
 <style scoped>
+.error
+{
+    color: red;
+}
+
 th, td {
     padding: 12px;
     text-align: left;
@@ -103,7 +123,7 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(odd) {
-    background-color: #86fff5;
+    background-color: #6eddd4;
 }
 
 #editBox 

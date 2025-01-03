@@ -11,6 +11,7 @@
             <button @click="reschedule"> Reschedule </button>
             <button> Delete </button>
         </div>
+        <p v-if="validation.fillError" id="error"> Fill the date field </p>
     </div>
     <div v-if="rescheduleSuccess">
         <h3> Topic Successfully Rescheduled </h3>
@@ -21,12 +22,16 @@
 
 
 <script setup>
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 const id = defineProps({
     studySessionID: String,
     name: String
+})
+
+const validation = reactive({
+    fillError: false
 })
 
 
@@ -38,6 +43,16 @@ const router = useRouter();
 
 const reschedule = async () =>
 {
+    if (selectedDate.value.length < 1)
+    {
+        validation.fillError = true;
+        return;
+    }
+    else
+    {
+        validation.fillError = false;
+    }
+
     const splitDate = selectedDate.value.split('/');
     const year = splitDate[2];
     const month = splitDate[0].padStart(2, '0');
@@ -90,3 +105,11 @@ const goToDashboard = () =>
     
 
 </script>
+
+<style scoped>
+#error
+{
+    color: red;
+}
+
+</style>

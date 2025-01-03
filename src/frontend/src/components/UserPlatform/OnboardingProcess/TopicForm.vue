@@ -25,16 +25,18 @@
                 </div>
                 <button 
                     id="getStartedButton"
-                    @click="$emit('fillTopics', topics)"
+                    @click="submitTopic"
                     > Next 
                 </button>
+                <p id="error" v-if="validation.fillError"> Fill in all fields </p>
+                <p id="error" v-if="validation.lengthError"> Max 25 characters per field </p>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { reactive, defineProps } from "vue";
+import { reactive, defineProps, defineEmits } from "vue";
 
 let topics = reactive({
     one: "",
@@ -43,9 +45,34 @@ let topics = reactive({
     twoCompetency: ""
 })
 
+const validation = reactive({
+    fillError: false,
+    lengthError: false
+})
+
 const props = defineProps({
     subject: String
 });
+
+const emit = defineEmits(['fillTopics']);
+
+const submitTopic = () =>
+{
+    if (topics.one.length < 1 || topics.oneCompetency.length < 1 || topics.two.length < 1 || topics.twoCompetency.length < 1)
+    {
+        validation.fillError = true;
+    }
+    else if (topics.one.length > 25 || topics.oneCompetency.length > 25 || topics.two.length > 25 || topics.twoCompetency.length > 25)
+    {
+        validation.lengthError = true;
+    }
+    else
+    {
+        validation.fillError = false;
+        validation.lengthError = false;
+        emit("fillTopics", topics);
+    }
+}
 
 </script>
 
@@ -68,6 +95,11 @@ const props = defineProps({
     flex-direction: column;
     padding: 1em;
     text-align: center;
+}
+
+#error
+{
+    color: red;
 }
 
 h2 

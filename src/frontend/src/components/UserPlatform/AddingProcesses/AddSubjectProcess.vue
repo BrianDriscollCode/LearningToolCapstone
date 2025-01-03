@@ -12,6 +12,8 @@
                 <button @click="submitSubject">
                     Submit
                 </button>
+                <p v-if="validation.fillError" class="error"> Need to fill the field </p>
+                <p v-if="validation.lengthError" class="error"> Max 25 characters </p>
             </div>
         </div>
     </div>
@@ -30,8 +32,33 @@ const userInput = reactive({
     subject: ''
 });
 
+const validation = reactive({
+    fillError: false,
+    lengthError: false
+});
+
 const submitSubject = async () =>
 {
+    if (userInput.subject.length < 1)
+    {
+        validation.fillError = true;
+        return;
+    }
+    else
+    {
+        validation.fillError = false;
+    }
+
+    if (userInput.subject.length > 25)
+    {
+        validation.lengthError = true;
+        return;
+    }
+    else
+    {
+        validation.lengthError = false;
+    }
+
     const dbResponse = await fetch(`/api/subjects/create`, {
         method: 'POST',
         headers:
@@ -63,6 +90,12 @@ const goToLearningMap = () =>
 </script>
 
 <style scoped>
+
+.error
+{
+    color: red;
+}
+
 .backLinkContainer
 {
     text-align: left;

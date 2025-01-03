@@ -1,9 +1,10 @@
 <template>
     <tr>
         <td>  </td>
-        <td class="inputField"> <input v-model="fields.question"/> </td>
-        <td class="inputField"> <input v-model="fields.answer"/> </td>
+        <td class="inputField"> <input v-model="fields.question"/> <p v-if="validation.fillError" class="error"> No empty fields </p></td>
+        <td class="inputField"> <input v-model="fields.answer"/> <p v-if="validation.fillError" class="error"> No empty fields </p></td>
         <td> <button class="editButton" @click="submitQuestion"> Submit </button> </td>
+        
     </tr>
 </template>
 
@@ -22,10 +23,24 @@ const fields = reactive({
     answer: ''
 });
 
+const validation = reactive({
+    fillError: false
+});
+
 const emit = defineEmits(['updateQuestions']);
 
 const submitQuestion = async () => 
 {
+    if (fields.question.length < 1 || fields.answer.length < 1)
+    {
+        validation.fillError = true;
+        return;
+    }
+    else
+    {
+        validation.fillError = false;
+    }
+
     const dbResponse = await fetch(`/api/fullQuestion/post/${fields.question}/${fields.answer}/${props.topicID}`, {
         method: 'POST',
         headers: {
@@ -42,6 +57,10 @@ const submitQuestion = async () =>
 </script>
 
 <style scoped>
+.error
+{
+    color: red;
+}
 
 input 
 {

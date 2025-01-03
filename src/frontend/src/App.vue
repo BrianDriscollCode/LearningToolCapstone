@@ -128,7 +128,7 @@ body
   flex: 1;
   height: 100%;
   overflow: hidden;
-  background-color: rgb(82, 74, 65);
+  background-color: #6D597A;
 }
 
 .contentContainer.overflowAllowed
