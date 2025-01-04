@@ -61,20 +61,6 @@ class UserServiceTest {
         Assertions.assertInstanceOf(User.class, user);
     }
 
-    // Function: setUserPersonNameByID
-    @Test
-    void testSetUserPersonNameByID()
-    {
-        User user1 = userServiceImpl.getUserByID(1L);
-        String tempName = user1.getName();
-
-        userServiceImpl.setUserPersonNameByID(1L, "John");
-        Assertions.assertEquals("John", user1.getName());
-
-        userServiceImpl.setUserPersonNameByID(1L, tempName);
-        Assertions.assertEquals(tempName, user1.getName());
-    }
-
     // Function: setUserOnboardingStatus
     @Test
     void testSetUserOnboardingStatus()

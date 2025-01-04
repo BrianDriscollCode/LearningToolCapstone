@@ -154,7 +154,7 @@ public class StudySessionService {
 
         for (int i = 0; i < howManyDays; i++)
         {
-            LocalDate currentDate = today.plusDays(i);
+            LocalDate currentDate = today.plusDays(i - 1);
 
             if (daysOnTracker < 2)
             {
@@ -185,7 +185,7 @@ public class StudySessionService {
         int daysBetweenSessions = 8;
 
         for (int i = 0; i < howManyDays; i++) {
-            LocalDate currentDate = today.plusDays(i);
+            LocalDate currentDate = today.plusDays(i - 1);
 
             if (daysOnTracker == 0) {
                 StudySession newStudySession = new StudySession();
@@ -216,7 +216,7 @@ public class StudySessionService {
 
         for (int i = 0; i < howManyDays; i++)
         {
-            LocalDate currentDate = today.plusDays(i);
+            LocalDate currentDate = today.plusDays(i - 1);
 
             if (daysOnTracker == 3)
             {
@@ -250,7 +250,7 @@ public class StudySessionService {
 
         for (int i = 0; i < howManyDays; i++)
         {
-            LocalDate currentDate = today.plusDays(i);
+            LocalDate currentDate = today.plusDays(i - 1);
 
             if (currentDate.getDayOfWeek() != DayOfWeek.SUNDAY)
             {

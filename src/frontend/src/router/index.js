@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 // General
 import HomeView from '@/views/HomeView.vue'
@@ -11,7 +11,7 @@ import SignUpView from '@/views/SignUpView.vue'
 import { supabase } from '@/clients/supabase'
 
 const router = createRouter({
-history: createWebHistory(process.env.BASE_URL),
+history: createWebHashHistory(process.env.BASE_URL),
     routes: [
         {
             path: '/',

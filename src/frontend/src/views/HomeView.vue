@@ -1,6 +1,6 @@
 <template>
   <section id="homeMainSection">
-    <h1 id="homeTitle"> Welcome to Serial Studier </h1>
+    <h1 id="homeTitle"> Welcome to Serial Studier v.01 </h1>
     <p id="tagLineHome"> Your one-stop shop for automizing your study habits!</p>
     <div class="logoContainer">
         <img id="logo" :src="logo" width="200" height="200"/>
