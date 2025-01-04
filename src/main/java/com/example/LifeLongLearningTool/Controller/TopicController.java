@@ -35,6 +35,7 @@ public class TopicController {
         return topicService.getTopicWithID(id);
     }
 
+    // consider to delete in future
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody TopicDTO topicDTO)
     {

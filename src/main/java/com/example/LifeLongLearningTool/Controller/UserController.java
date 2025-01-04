@@ -20,9 +20,6 @@ public class UserController {
     private UserServiceImpl userServiceImpl;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private OnboardingService onboardingService;
 
     @GetMapping

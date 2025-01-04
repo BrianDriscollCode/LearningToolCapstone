@@ -1,0 +1,5 @@
+FROM custom-java-23-image:latest
+MAINTAINER Brian
+COPY target/LifeLongLearningTool-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+
