@@ -156,7 +156,7 @@ public class StudySessionService {
         {
             LocalDate currentDate = today.plusDays(i - 1);
 
-            if (daysOnTracker < 2)
+            if (daysOnTracker < 3)
             {
                 StudySession newStudySession = new StudySession();
                 newStudySession.setUserID(topic.getSubject().getUserID());
@@ -170,7 +170,7 @@ public class StudySessionService {
             }
             else
             {
-                daysOnTracker = (daysOnTracker + 1) % 4;
+                daysOnTracker = (daysOnTracker + 1) % 6;
             }
         }
     }

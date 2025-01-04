@@ -24,7 +24,7 @@
           <br />
           <input class="accountInput" type="text" placeholder="First Name" v-model="userInfo.firstName" /> 
           
-          <button id="loginButton" @click="createAccount"> Sign up </button> 
+          <button id="loginButton" @click="createAccount" v-if="!button.pressed"> Sign up </button> 
           
         </div>
         
@@ -47,11 +47,17 @@ let userInfo = reactive({
   firstName: "Brian"
 });
 
+const button = reactive({
+  pressed: false
+})
+
 const router = useRouter();
 const emit = defineEmits(["signUpComplete"]);
 
 async function createAccount()
 {
+  button.pressed = true;
+
   const { data, error } = await supabase.auth.signUp(
     {
       email: userInfo.email,
