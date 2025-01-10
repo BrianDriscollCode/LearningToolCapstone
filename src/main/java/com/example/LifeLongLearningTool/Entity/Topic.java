@@ -1,5 +1,7 @@
 package com.example.LifeLongLearningTool.Entity;
 
+import com.example.LifeLongLearningTool.Enum.Competency;
+import com.example.LifeLongLearningTool.Enum.LearningStatus;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -13,32 +15,43 @@ public class Topic {
 
     @ManyToOne
     @JoinColumn(name="SubjectID", nullable = false)
-    private Subject subjectID;
+    private Subject subject;
 
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "competency", nullable = false)
-    private String competency;
+    private Competency competency = Competency.BEGINNER;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "learning_status", nullable = false)
+    private LearningStatus learningStatus = LearningStatus.ACTIVE;
 
     public Long getTopicID()
     {
         return topicID;
     }
 
-    public Subject getSubjectID()
+    public Subject getSubject()
     {
-        return subjectID;
+        return subject;
     }
+    public void setSubject(Subject subject) { this.subject = subject; }
 
     public String getName()
     {
         return name;
     }
+    public void setName(String name) { this.name = name; }
 
-    public String getCompetency()
+    public Competency getCompetency()
     {
         return competency;
     }
+    public void setCompetency(Competency competency) { this.competency = competency; }
+
+    public LearningStatus getLearningStatus() { return learningStatus; }
+    public void setLearningStatus(LearningStatus learningStatus) { this.learningStatus = learningStatus; }
 
 }

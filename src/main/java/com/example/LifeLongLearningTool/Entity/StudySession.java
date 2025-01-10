@@ -2,6 +2,7 @@ package com.example.LifeLongLearningTool.Entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -9,6 +10,7 @@ import java.util.Date;
 public class StudySession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "study_sessionid")
     private Long studySessionID;
 
     @ManyToOne
@@ -26,35 +28,35 @@ public class StudySession {
     private Boolean moreStudyRequired;
 
     @Column(name = "date", nullable = false)
-    private Date date;
+    private LocalDate date;
 
-    public Long getStudySessions()
-    {
-        return studySessionID;
-    }
+    public Long getStudySessionID() { return studySessionID; }
+    public void setStudySessionID(Long studySessionID) { this.studySessionID = studySessionID; }
 
-    public User getUserID()
-    {
-        return userID;
-    }
+    public User getUserID() { return userID; }
+    public void setUserID(User userID) { this.userID = userID; }
 
     public Topic getTopicID()
     {
         return topicID;
     }
+    public void setTopicID(Topic topicID) { this.topicID = topicID; }
 
     public Boolean getCompleted()
     {
         return completed;
     }
+    public void setCompleted(Boolean completed) { this.completed = completed; }
 
     public Boolean getMoreStudyRequired()
     {
         return moreStudyRequired;
     }
+    public void setMoreStudyRequired(Boolean moreStudyRequired) { this.moreStudyRequired = moreStudyRequired; }
 
-    public Date getDate()
+    public LocalDate getDate()
     {
         return date;
     }
+    public void setDate(LocalDate date) { this.date = date; }
 }

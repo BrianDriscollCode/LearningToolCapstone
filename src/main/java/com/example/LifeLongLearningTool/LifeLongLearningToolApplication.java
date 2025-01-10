@@ -19,5 +19,4 @@ public class LifeLongLearningToolApplication {
 	{
 		return String.format("Hello %s!", name);
 	}
-
 }

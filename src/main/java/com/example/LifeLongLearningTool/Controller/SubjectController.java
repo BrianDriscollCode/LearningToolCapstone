@@ -1,12 +1,12 @@
 package com.example.LifeLongLearningTool.Controller;
 
+import com.example.LifeLongLearningTool.Dto.SubjectDTO;
 import com.example.LifeLongLearningTool.Entity.Subject;
 import com.example.LifeLongLearningTool.Service.SubjectService;
 import com.example.LifeLongLearningTool.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +21,14 @@ public class SubjectController {
     public List<Subject> getAllSubjects()
     {
         return subjectService.getAllSubjects();
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<String> createSubject(@RequestBody SubjectDTO subjectDTO)
+    {
+        System.out.println("CREATE SUBJECT RAN");
+
+        subjectService.createSubject(subjectDTO.getUserUuid(), subjectDTO.getName());
+        return ResponseEntity.ok("Created subject successfully");
     }
 }
