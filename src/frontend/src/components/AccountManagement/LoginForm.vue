@@ -25,7 +25,7 @@
 
           <p v-if="validation.emailError" class="error"> Wrong email or password... </p> 
           <!-- Leaving sign up off because would require different license for supabase to have unknown accounts to signup -->
-          <p> Don't have an account? <RouterLink to="/signup"> Sign up </RouterLink> </p>
+          <p> Don't have an account? <RouterLink to="/signup" id="signUpLink"> Sign up </RouterLink> </p>
           
         </div>
         
@@ -52,7 +52,7 @@ import { useRouter } from "vue-router";
 import { useAccountStore } from '@/stores/account';
 //import { RouterLink } from 'vue-router';
 import { config } from "@/config"
-import logo from '@/assets/mindMapPngTree.png';
+import logo from '@/assets/brain_logo.png';
 import xPNG from "@/assets/exitFlaticon.png";
 
 let userInfo = reactive({
@@ -237,6 +237,21 @@ async function exit()
   border-radius: 2em;
   border: .5px solid rgb(211, 211, 211);
 
+}
+
+#signUpLink
+{
+  color: #828dd4;
+}
+
+#signUpLink:hover
+{
+  color: #0a21c0;
+}
+
+#signUpLink:active
+{
+  color: #828dd4;
 }
 </style>
 

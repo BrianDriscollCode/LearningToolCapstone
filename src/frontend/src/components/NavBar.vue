@@ -8,7 +8,7 @@
         </div>
 
         <div :class="['accountLinks', { 'hidden': hiddenPage }]">
-            <span v-show="logStatus"> {{ account.name }} </span>
+            <span v-show="logStatus" id="logStatus"> {{ account.name }} </span>
             <!-- <span v-show="!logStatus"> Log in </span> -->
         </div>
     </nav>
@@ -37,7 +37,7 @@ const hiddenPage = computed(() =>
 <style scoped>
 .nav
 {
-    background-color: #EAAC8B;
+    background-color: #141619;
     width: 100%;
     height: 60px;
 
@@ -75,13 +75,18 @@ const hiddenPage = computed(() =>
 
 .routerLink
 {
-    color: #355070;
+    color: #b3b4bd;
     padding-right: 1em;
     text-decoration: none;
 }
 
 .routerLink:hover{
-    color: #E56B6F
+    color: #0a21c0
+}
+
+#logStatus
+{
+    color: #b3b4bd
 }
 
 </style>

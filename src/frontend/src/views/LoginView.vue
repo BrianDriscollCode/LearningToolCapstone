@@ -14,7 +14,7 @@ import LoginForm from '@/components/AccountManagement/LoginForm.vue';
     flex: 1;
     height: 100%;
     width: 100%;
-    background-color: #6D597A;
+    background-color: #b3b4bd;
     display: flex;
     justify-content: center;
     overflow: hidden;

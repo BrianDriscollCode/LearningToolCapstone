@@ -23,6 +23,7 @@ const account = useAccountStore();
 
 // define which container styling to use depending on route (overflow hidden or not)
 const overflowPage = computed(() => 
+  route.name === "home" ||
   route.name === "userHome" || 
   route.name === "dataPage" ||
   route.name === "schedule" ||
@@ -191,7 +192,7 @@ body
   flex: 1;
   height: 100%;
   overflow: hidden;
-  background-color: #6D597A;
+  background-color: #050a44;
 }
 
 .contentContainer.overflowAllowed
