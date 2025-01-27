@@ -192,7 +192,7 @@ body
   flex: 1;
   height: 100%;
   overflow: hidden;
-  background-color: #050a44;
+  background-color: #d3d4dd;
 }
 
 .contentContainer.overflowAllowed

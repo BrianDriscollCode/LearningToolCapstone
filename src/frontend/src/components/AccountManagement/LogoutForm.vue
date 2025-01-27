@@ -7,6 +7,10 @@
         <button @click="logout"> Logout </button> 
       </div>
     </form>
+
+    <hr />
+
+    <button> Go to Dashboard </button>
   </div> 
 </template>
 
@@ -28,7 +32,6 @@ async function logout()
   account.logOut();
   account.isAdmin = false;
   const { error } = await supabase.auth.signOut();
-  
 
   if (error)
   {

@@ -32,7 +32,7 @@ const signUpComplete = () =>
     flex: 1;
     height: 100%;
     width: 100%;
-    background-color: #b3b4bd;
+    background-color: #d3d4dd;
     display: flex;
     justify-content: center;
     overflow: hidden;

@@ -37,10 +37,14 @@
         
           <button id="loginButton" @click="logout"> Logout </button> 
 
-          
+          <div id="logoutLineContainer">
+            <hr id="logoutLine" />
+          </div>
         </div>
         
       </form>
+
+      <button id="dashboardButton" @click="goToDashboard"> Go to Dashboard </button>
     </div>
   </section> 
 </template>
@@ -142,6 +146,11 @@ async function exit()
   router.push('/')
 }
 
+const goToDashboard = () =>
+{
+  router.push('/platform/dashboard');
+}
+
 </script>
 
 <style scoped>
@@ -233,10 +242,41 @@ async function exit()
 {
   width: 100%;
   height: 40px;
-  margin: 0 0 2em 0;
-  border-radius: 2em;
+  margin: 0 0 24px 0;
+  border-radius: 1.5em;
   border: .5px solid rgb(211, 211, 211);
 
+}
+
+#dashboardButton
+{
+  width: 100%;
+  height: 40px;
+  margin: 24px 0 24px 0;
+  border-radius: 2em;
+  border: .5px solid rgb(211, 211, 211);
+}
+
+#loginButton:hover
+{
+  background-color: #a9ddec;
+}
+
+#dashboardButton:hover
+{
+  background-color: #a9ddec;
+}
+
+#logoutLineContainer
+{
+  display: flex;
+  justify-content: center;
+}
+
+#logoutLine
+{
+  margin: 0;
+  width: 100px;
 }
 
 #signUpLink

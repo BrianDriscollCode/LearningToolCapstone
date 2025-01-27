@@ -229,11 +229,10 @@ const initSession = async () =>
 .userHomeContainer
 {
     padding-top: 2em;
-    background-color: #6D597A;
+    background-color: #cde9e9;
     display: flex;
     align-items: center;
     flex-direction: column;
-   
 }
 
 button {
